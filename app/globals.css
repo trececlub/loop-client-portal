@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body), sans-serif;
+  background: radial-gradient(circle at 10% 10%, rgba(58, 141, 222, 0.12), transparent 35%),
+    radial-gradient(circle at 90% 5%, rgba(11, 139, 125, 0.12), transparent 30%),
+    #f4f7f6;
+  color: #102126;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading), sans-serif;
+  letter-spacing: -0.02em;
+}
