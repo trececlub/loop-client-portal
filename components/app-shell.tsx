@@ -11,11 +11,19 @@ const nav = [
   { href: "/comparativas", label: "Comparativas" },
   { href: "/reportes", label: "Reportes" },
   { href: "/perfil", label: "Perfil" },
-  { href: "/usuarios", label: "Usuarios" }
+  { href: "/usuarios", label: "Usuarios", internalOnly: true }
 ];
 
-export function AppShell({ children }: { children: React.ReactNode }) {
+type AppShellProps = {
+  role: "CTO" | "CEO" | "OPERARIO" | "CLIENTE";
+  clientName: string;
+  userName: string;
+  children: React.ReactNode;
+};
+
+export function AppShell({ role, clientName, userName, children }: AppShellProps) {
   const pathname = usePathname();
+  const filteredNav = nav.filter((item) => !(item.internalOnly && role === "CLIENTE"));
 
   return (
     <div className="min-h-screen bg-bg text-ink">
@@ -28,7 +36,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </div>
 
           <nav className="mt-5 space-y-1">
-            {nav.map((item) => {
+            {filteredNav.map((item) => {
               const active = pathname === item.href;
               return (
                 <Link
@@ -50,11 +58,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate">Cliente activo</p>
-                <h2 className="text-lg font-semibold">Clinica Sonrisa</h2>
+                <h2 className="text-lg font-semibold">{clientName}</h2>
+                <p className="text-xs text-slate">{userName} · {role}</p>
               </div>
-              <div className="inline-flex items-center gap-3 rounded-xl border border-slate/20 bg-bg px-3 py-2 text-sm">
-                <span className="inline-block h-2 w-2 rounded-full bg-mint" />
-                Operacion estable
+              <div className="flex items-center gap-2">
+                <div className="inline-flex items-center gap-3 rounded-xl border border-slate/20 bg-bg px-3 py-2 text-sm">
+                  <span className="inline-block h-2 w-2 rounded-full bg-mint" />
+                  Operacion estable
+                </div>
+                <Link href="/logout" className="rounded-xl border border-slate/20 bg-bg px-3 py-2 text-sm text-slate hover:bg-slate/10">
+                  Salir
+                </Link>
               </div>
             </div>
           </header>

@@ -1,4 +1,14 @@
-export default function ReportsPage() {
+import { getPortalSession } from "@/lib/auth";
+import { getReportRows } from "@/lib/data-store";
+import { redirect } from "next/navigation";
+
+export default async function ReportsPage({ searchParams }: { searchParams?: { month?: string } }) {
+  const session = await getPortalSession();
+  if (!session) redirect("/login");
+
+  const month = searchParams?.month || currentMonth();
+  const rows = await getReportRows(session.clientCode, month);
+
   return (
     <div className="space-y-6">
       <header>
@@ -8,24 +18,52 @@ export default function ReportsPage() {
 
       <section className="rounded-2xl border border-slate/20 bg-white p-4 shadow-card">
         <p className="text-sm text-slate">Selecciona el mes y descarga el reporte en CSV.</p>
-        <div className="mt-4 flex flex-wrap items-center gap-3">
-          <select className="rounded-xl border border-slate/20 bg-bg px-3 py-2 text-sm">
-            <option>Marzo 2026</option>
-            <option>Febrero 2026</option>
-            <option>Enero 2026</option>
-          </select>
-          <button className="rounded-xl bg-ink px-4 py-2 text-sm font-medium text-white hover:bg-ink/90">Descargar CSV</button>
-        </div>
+        <form className="mt-4 flex flex-wrap items-center gap-3" method="get">
+          <input name="month" defaultValue={month} className="rounded-xl border border-slate/20 bg-bg px-3 py-2 text-sm" placeholder="2026-03" />
+          <button className="rounded-xl border border-slate/20 bg-bg px-4 py-2 text-sm">Aplicar</button>
+          <a
+            href={`/api/report?month=${month}`}
+            className="rounded-xl bg-ink px-4 py-2 text-sm font-medium text-white hover:bg-ink/90"
+          >
+            Descargar CSV
+          </a>
+        </form>
       </section>
 
       <section className="rounded-2xl border border-slate/20 bg-white p-4 shadow-card">
-        <h3 className="text-sm font-semibold">Ultimas descargas</h3>
-        <ul className="mt-3 space-y-2 text-sm text-slate">
-          <li>Reporte Marzo 2026 - 2026-03-05 10:03</li>
-          <li>Reporte Febrero 2026 - 2026-03-01 09:11</li>
-          <li>Reporte Enero 2026 - 2026-02-01 08:50</li>
-        </ul>
+        <h3 className="text-sm font-semibold">Preview del reporte ({rows.length} filas)</h3>
+        <div className="mt-3 overflow-x-auto">
+          <table className="w-full min-w-[700px] text-left text-sm">
+            <thead className="text-xs uppercase tracking-[0.1em] text-slate">
+              <tr>
+                <th className="py-2">Fecha</th>
+                <th className="py-2">Modulo</th>
+                <th className="py-2">Estado</th>
+                <th className="py-2">Detalle</th>
+                <th className="py-2">Referencia</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.slice(0, 12).map((row, index) => (
+                <tr key={`${row.datetime}-${index}`} className="border-t border-slate/10">
+                  <td className="py-2.5">{row.datetime}</td>
+                  <td className="py-2.5">{row.module}</td>
+                  <td className="py-2.5">{row.status}</td>
+                  <td className="py-2.5">{row.detail}</td>
+                  <td className="py-2.5">{row.reference}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </section>
     </div>
   );
+}
+
+function currentMonth() {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  return `${year}-${month}`;
 }

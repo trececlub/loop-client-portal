@@ -1,4 +1,10 @@
-export default function ProfilePage() {
+import { getPortalSession } from "@/lib/auth";
+import { redirect } from "next/navigation";
+
+export default async function ProfilePage() {
+  const session = await getPortalSession();
+  if (!session) redirect("/login");
+
   return (
     <div className="space-y-6">
       <header>
@@ -9,14 +15,18 @@ export default function ProfilePage() {
       <section className="grid gap-4 md:grid-cols-2">
         <article className="rounded-2xl border border-slate/20 bg-white p-4 shadow-card">
           <p className="text-xs uppercase tracking-[0.14em] text-slate">Usuario</p>
-          <p className="mt-2 text-lg font-medium">cliente@negocio.com</p>
-          <p className="mt-1 text-sm text-slate">Rol: CLIENTE</p>
+          <p className="mt-2 text-lg font-medium">{session.user.email}</p>
+          <p className="mt-1 text-sm text-slate">Rol: {session.role}</p>
         </article>
         <article className="rounded-2xl border border-slate/20 bg-white p-4 shadow-card">
-          <p className="text-xs uppercase tracking-[0.14em] text-slate">Zona horaria</p>
-          <p className="mt-2 text-lg font-medium">America/Bogota</p>
-          <p className="mt-1 text-sm text-slate">Formato: 24 horas</p>
+          <p className="text-xs uppercase tracking-[0.14em] text-slate">Cliente</p>
+          <p className="mt-2 text-lg font-medium">{session.clientName}</p>
+          <p className="mt-1 text-sm text-slate">Codigo: {session.clientCode}</p>
         </article>
+      </section>
+
+      <section className="rounded-2xl border border-slate/20 bg-white p-4 shadow-card">
+        <p className="text-sm text-slate">Para cerrar sesion usa el boton "Salir" en la esquina superior.</p>
       </section>
     </div>
   );

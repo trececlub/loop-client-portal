@@ -1,26 +1,36 @@
-import { appointmentsTable } from "@/lib/mock-data";
+import { getPortalSession } from "@/lib/auth";
+import { getAppointmentsForClient } from "@/lib/data-store";
+import { redirect } from "next/navigation";
 
-export default function AppointmentsPage() {
+export default async function AppointmentsPage({ searchParams }: { searchParams?: { month?: string } }) {
+  const session = await getPortalSession();
+  if (!session) redirect("/login");
+
+  const month = searchParams?.month;
+  const rows = await getAppointmentsForClient(session.clientCode, month);
+
+  const scheduled = rows.filter((row) => row.status === "Agendada").length;
+  const confirmed = rows.filter((row) => row.status === "Confirmada").length;
+  const canceled = rows.filter((row) => row.status === "Cancelada").length;
+
   return (
     <div className="space-y-6">
-      <header>
-        <p className="text-xs uppercase tracking-[0.18em] text-slate">Agenda</p>
-        <h1 className="mt-1 text-3xl font-semibold">Citas</h1>
+      <header className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="text-xs uppercase tracking-[0.18em] text-slate">Agenda</p>
+          <h1 className="mt-1 text-3xl font-semibold">Citas</h1>
+        </div>
+        <form method="get" className="rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm shadow-card">
+          <label className="mr-2 text-slate">Mes</label>
+          <input name="month" defaultValue={month || ""} className="rounded-md border border-slate/20 bg-bg px-2 py-1" placeholder="2026-03" />
+          <button className="ml-2 rounded-md bg-ink px-3 py-1 text-white">Aplicar</button>
+        </form>
       </header>
 
       <section className="grid gap-4 md:grid-cols-3">
-        <article className="rounded-2xl border border-slate/20 bg-white p-4 shadow-card">
-          <p className="text-xs uppercase tracking-[0.14em] text-slate">Agendadas</p>
-          <p className="mt-2 text-3xl font-semibold">198</p>
-        </article>
-        <article className="rounded-2xl border border-slate/20 bg-white p-4 shadow-card">
-          <p className="text-xs uppercase tracking-[0.14em] text-slate">Confirmadas</p>
-          <p className="mt-2 text-3xl font-semibold">164</p>
-        </article>
-        <article className="rounded-2xl border border-slate/20 bg-white p-4 shadow-card">
-          <p className="text-xs uppercase tracking-[0.14em] text-slate">Canceladas</p>
-          <p className="mt-2 text-3xl font-semibold">21</p>
-        </article>
+        <StatCard title="Agendadas" value={scheduled} />
+        <StatCard title="Confirmadas" value={confirmed} />
+        <StatCard title="Canceladas" value={canceled} />
       </section>
 
       <section className="rounded-2xl border border-slate/20 bg-white p-4 shadow-card">
@@ -35,8 +45,8 @@ export default function AppointmentsPage() {
               </tr>
             </thead>
             <tbody>
-              {appointmentsTable.map((row) => (
-                <tr key={`${row.datetime}-${row.note}`} className="border-t border-slate/10">
+              {rows.map((row) => (
+                <tr key={row.id} className="border-t border-slate/10">
                   <td className="py-2.5">{row.datetime}</td>
                   <td className="py-2.5">{row.status}</td>
                   <td className="py-2.5">{row.channel}</td>
@@ -48,5 +58,14 @@ export default function AppointmentsPage() {
         </div>
       </section>
     </div>
+  );
+}
+
+function StatCard({ title, value }: { title: string; value: number }) {
+  return (
+    <article className="rounded-2xl border border-slate/20 bg-white p-4 shadow-card">
+      <p className="text-xs uppercase tracking-[0.14em] text-slate">{title}</p>
+      <p className="mt-2 text-3xl font-semibold">{value}</p>
+    </article>
   );
 }

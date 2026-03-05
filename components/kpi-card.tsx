@@ -1,6 +1,11 @@
-import type { Kpi } from "@/lib/mock-data";
+type KpiItem = {
+  label: string;
+  value: string;
+  delta: string;
+  tone: "up" | "down" | "neutral";
+};
 
-export function KpiCard({ item }: { item: Kpi }) {
+export function KpiCard({ item }: { item: KpiItem }) {
   const toneClass = item.tone === "up" ? "text-mint" : item.tone === "down" ? "text-coral" : "text-slate";
 
   return (
