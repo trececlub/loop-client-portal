@@ -210,7 +210,31 @@ export async function readPortalData() {
   await ensureDataFile();
   const raw = await fs.readFile(DATA_FILE, "utf8");
   const parsed = JSON.parse(raw) as PortalData;
-  return parsed;
+
+  let changed = false;
+  const fallbackClientCode = parsed.clients[0]?.code || null;
+
+  const normalizedUsers = parsed.users.map((user) => {
+    const normalizedClientCode = user.role === "CLIENTE" ? user.clientCode || fallbackClientCode : null;
+    if (normalizedClientCode !== user.clientCode) {
+      changed = true;
+    }
+    return {
+      ...user,
+      clientCode: normalizedClientCode,
+    };
+  });
+
+  const normalized: PortalData = {
+    ...parsed,
+    users: normalizedUsers,
+  };
+
+  if (changed) {
+    await writePortalData(normalized);
+  }
+
+  return normalized;
 }
 
 async function writePortalData(data: PortalData) {

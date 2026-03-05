@@ -93,6 +93,7 @@ export default async function UsersPage({
               </option>
             ))}
           </select>
+          <p className="text-xs text-slate md:col-span-2">Codigo cliente aplica solo cuando el rol creado sea `CLIENTE`.</p>
 
           <button className="rounded-xl bg-ink px-3 py-2 text-sm text-white md:col-span-2">Nuevo usuario</button>
         </form>

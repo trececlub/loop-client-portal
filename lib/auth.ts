@@ -11,6 +11,7 @@ import {
 export type PortalSession = {
   user: PortalUser;
   role: PortalRole;
+  assignedClientCode: string | null;
   clientCode: string;
   clientName: string;
 };
@@ -31,6 +32,7 @@ export async function getPortalSession(): Promise<PortalSession | null> {
   return {
     user,
     role: user.role,
+    assignedClientCode: user.role === "CLIENTE" ? user.clientCode : null,
     clientCode,
     clientName: client?.name || "Cliente"
   };

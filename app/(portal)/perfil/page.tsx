@@ -19,9 +19,19 @@ export default async function ProfilePage() {
           <p className="mt-1 text-sm text-slate">Rol: {session.role}</p>
         </article>
         <article className="rounded-2xl border border-slate/20 bg-white p-4 shadow-card">
-          <p className="text-xs uppercase tracking-[0.14em] text-slate">Cliente</p>
-          <p className="mt-2 text-lg font-medium">{session.clientName}</p>
-          <p className="mt-1 text-sm text-slate">Codigo: {session.clientCode}</p>
+          {session.role === "CLIENTE" ? (
+            <>
+              <p className="text-xs uppercase tracking-[0.14em] text-slate">Cliente</p>
+              <p className="mt-2 text-lg font-medium">{session.clientName}</p>
+              <p className="mt-1 text-sm text-slate">Codigo asignado: {session.assignedClientCode}</p>
+            </>
+          ) : (
+            <>
+              <p className="text-xs uppercase tracking-[0.14em] text-slate">Perfil administrativo</p>
+              <p className="mt-2 text-lg font-medium">Sin codigo de cliente asignado</p>
+              <p className="mt-1 text-sm text-slate">Contexto actual de vista: {session.clientCode}</p>
+            </>
+          )}
         </article>
       </section>
 
