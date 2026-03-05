@@ -3,6 +3,13 @@ import path from "node:path";
 
 export type PortalRole = "CTO" | "CEO" | "OPERARIO" | "CLIENTE";
 export type UserStatus = "Active" | "Disabled" | "Pending";
+export type UserPolicyError =
+  | "forbidden"
+  | "not_found"
+  | "duplicate_email"
+  | "missing_email"
+  | "cannot_delete_self"
+  | "invalid_client_code";
 
 export type PortalClient = {
   code: string;
@@ -391,6 +398,7 @@ export async function listPortalUsers() {
 }
 
 export async function createPortalUser(input: {
+  actorRole: PortalRole;
   name: string;
   email: string;
   password: string;
@@ -400,10 +408,21 @@ export async function createPortalUser(input: {
 }) {
   const data = await readPortalData();
 
+  if (!canActorCreateUser(input.actorRole, input.role)) {
+    return { ok: false as const, error: "forbidden" as UserPolicyError };
+  }
+
   const normalizedEmail = input.email.trim().toLowerCase();
   if (!normalizedEmail) return { ok: false as const, error: "missing_email" };
   if (data.users.some((user) => user.email.toLowerCase() === normalizedEmail)) {
     return { ok: false as const, error: "duplicate_email" };
+  }
+
+  if (input.role === "CLIENTE") {
+    const foundClient = data.clients.find((client) => client.code === input.clientCode);
+    if (!foundClient) {
+      return { ok: false as const, error: "invalid_client_code" as UserPolicyError };
+    }
   }
 
   const created: PortalUser = {
@@ -420,6 +439,63 @@ export async function createPortalUser(input: {
   data.users.unshift(created);
   await writePortalData(data);
   return { ok: true as const, user: created };
+}
+
+export async function updatePortalUser(input: {
+  actorRole: PortalRole;
+  actorUserId: string;
+  targetUserId: string;
+  role: PortalRole;
+  status: UserStatus;
+  clientCode: string | null;
+  password?: string;
+}) {
+  const data = await readPortalData();
+  const userIndex = data.users.findIndex((user) => user.id === input.targetUserId);
+  if (userIndex === -1) return { ok: false as const, error: "not_found" as UserPolicyError };
+
+  const target = data.users[userIndex];
+  if (!canActorModifyUser(input.actorRole)) {
+    return { ok: false as const, error: "forbidden" as UserPolicyError };
+  }
+
+  if (input.role === "CLIENTE") {
+    const foundClient = data.clients.find((client) => client.code === input.clientCode);
+    if (!foundClient) {
+      return { ok: false as const, error: "invalid_client_code" as UserPolicyError };
+    }
+  }
+
+  const nextPassword = input.password && input.password.trim().length > 0 ? input.password.trim() : target.password;
+  data.users[userIndex] = {
+    ...target,
+    role: input.role,
+    status: input.status,
+    clientCode: input.role === "CLIENTE" ? input.clientCode : null,
+    password: nextPassword,
+  };
+
+  await writePortalData(data);
+  return { ok: true as const, user: data.users[userIndex] };
+}
+
+export async function deletePortalUser(input: { actorRole: PortalRole; actorUserId: string; targetUserId: string }) {
+  const data = await readPortalData();
+  const userIndex = data.users.findIndex((user) => user.id === input.targetUserId);
+  if (userIndex === -1) return { ok: false as const, error: "not_found" as UserPolicyError };
+
+  const target = data.users[userIndex];
+  if (!canActorDeleteUser(input.actorRole, target.role)) {
+    return { ok: false as const, error: "forbidden" as UserPolicyError };
+  }
+
+  if (target.id === input.actorUserId) {
+    return { ok: false as const, error: "cannot_delete_self" as UserPolicyError };
+  }
+
+  data.users.splice(userIndex, 1);
+  await writePortalData(data);
+  return { ok: true as const };
 }
 
 export async function getReportRows(clientCode: string, monthKey?: string) {
@@ -465,4 +541,22 @@ export async function getReportRows(clientCode: string, monthKey?: string) {
 export async function listClientOptions() {
   const data = await readPortalData();
   return data.clients;
+}
+
+export function canActorModifyUser(actorRole: PortalRole) {
+  return actorRole === "CTO";
+}
+
+export function canActorDeleteUser(actorRole: PortalRole, targetRole: PortalRole) {
+  if (actorRole === "CTO") return true;
+  if (actorRole === "CEO") return targetRole !== "CTO";
+  if (actorRole === "OPERARIO") return targetRole !== "CTO" && targetRole !== "CEO";
+  return false;
+}
+
+export function canActorCreateUser(actorRole: PortalRole, createdRole: PortalRole) {
+  if (actorRole === "CTO") return true;
+  if (actorRole === "CEO") return createdRole !== "CTO";
+  if (actorRole === "OPERARIO") return createdRole !== "CTO" && createdRole !== "CEO";
+  return false;
 }
