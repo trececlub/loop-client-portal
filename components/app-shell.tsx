@@ -31,11 +31,11 @@ export function AppShell({ role, userName, children }: AppShellProps) {
       <div className="pointer-events-none absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-sky/20 blur-3xl" />
 
       <div className="relative mx-auto grid min-h-screen w-full max-w-[1560px] grid-cols-1 gap-4 px-4 py-4 lg:grid-cols-[300px_1fr] lg:gap-5 lg:px-6">
-        <aside className="relative overflow-hidden rounded-3xl border border-sky-200/25 bg-gradient-to-b from-[#031428] via-[#07213f] to-[#0a2f56] p-4 text-white shadow-[0_24px_60px_-28px_rgba(5,28,52,0.92)]">
+        <aside className="glass-card-dark relative overflow-hidden rounded-3xl p-4 text-white">
           <div className="pointer-events-none absolute -right-10 -top-6 h-36 w-36 rounded-full bg-sky-300/20 blur-2xl" />
           <div className="pointer-events-none absolute -left-10 bottom-6 h-40 w-40 rounded-full bg-cyan-200/20 blur-3xl" />
 
-          <div className="relative rounded-2xl border border-white/25 bg-white/10 p-4 backdrop-blur">
+          <div className="glass-card relative rounded-2xl p-4">
             <img
               src="/brand/loop-logo.svg"
               alt="LOOP"
@@ -44,11 +44,11 @@ export function AppShell({ role, userName, children }: AppShellProps) {
             <h1 className="mt-3 text-xl font-semibold">Client Portal</h1>
             <p className="mt-2 text-sm text-white/90">Panel informativo para clientes y gestion interna.</p>
             <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
-              <div className="rounded-xl border border-white/25 bg-white/14 px-2.5 py-2">
+              <div className="rounded-xl border border-white/30 bg-white/20 px-2.5 py-2">
                 <p className="text-white/75">Rol activo</p>
                 <p className="mt-0.5 font-semibold text-white">{role}</p>
               </div>
-              <div className="rounded-xl border border-white/25 bg-white/14 px-2.5 py-2">
+              <div className="rounded-xl border border-white/30 bg-white/20 px-2.5 py-2">
                 <p className="text-white/75">Sesion</p>
                 <p className="mt-0.5 font-semibold text-white">Online</p>
               </div>
@@ -88,7 +88,7 @@ export function AppShell({ role, userName, children }: AppShellProps) {
           </nav>
         </aside>
 
-        <div className="rounded-3xl border border-slate/20 bg-panel/95 shadow-card backdrop-blur">
+        <div className="glass-card rounded-3xl">
           <header className="border-b border-slate/15 px-5 py-4 sm:px-7">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>

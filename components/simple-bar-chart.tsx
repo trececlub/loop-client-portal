@@ -6,7 +6,7 @@ export function SimpleBarChart({ title, data, colorClass }: { title: string; dat
   const avg = data.length > 0 ? total / data.length : 0;
 
   return (
-    <section className="rounded-2xl border border-slate/20 bg-white/95 p-4 shadow-card backdrop-blur-sm">
+    <section className="glass-card rounded-2xl p-4">
       <div className="flex items-center justify-between gap-2">
         <h3 className="text-sm font-semibold text-ink">{title}</h3>
         <div className="flex items-center gap-2">

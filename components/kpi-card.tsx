@@ -16,7 +16,7 @@ export function KpiCard({ item }: { item: KpiItem }) {
   const deltaPrefix = item.tone === "up" ? "▲" : item.tone === "down" ? "▼" : "•";
 
   return (
-    <article className="group relative overflow-hidden rounded-2xl border border-slate/20 bg-white/95 p-4 shadow-card backdrop-blur-sm transition-all hover:-translate-y-[2px] hover:shadow-[0_22px_40px_-24px_rgba(16,33,38,0.45)]">
+    <article className="glass-card group rounded-2xl p-4 transition-all hover:-translate-y-[2px] hover:shadow-[0_22px_40px_-24px_rgba(16,33,38,0.45)]">
       <div className="pointer-events-none absolute -right-10 -top-10 h-24 w-24 rounded-full bg-sky/10 blur-2xl transition group-hover:bg-sky/20" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-mint/80 via-sky/80 to-mint/80" />
       <p className="text-[11px] uppercase tracking-[0.16em] text-slate">{item.label}</p>
