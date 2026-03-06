@@ -1,4 +1,3 @@
-import { DashboardHeroCard } from "@/components/dashboard-hero-card";
 import { KpiCard } from "@/components/kpi-card";
 import { MonthSelectForm } from "@/components/month-select-form";
 import { SimpleBarChart } from "@/components/simple-bar-chart";
@@ -44,16 +43,10 @@ export default async function DashboardPage({ searchParams }: { searchParams?: {
       tone: snapshot.deltas.conversionPts >= 0 ? "up" : "down",
     },
   ] as const;
-  const [callsCard, appointmentsCard, ...secondaryCards] = cards;
-
   const callsData = snapshot.trend.map((item) => ({ label: item.day, value: item.calls }));
   const apptData = snapshot.trend.map((item) => ({ label: item.day, value: item.appointments }));
   const attendedCalls = allCalls.filter((row) => row.status === "Atendida").length;
-  const confirmedAppointments = monthAppointments.filter((row) => row.status === "Confirmada").length;
-  const canceledAppointments = monthAppointments.filter((row) => row.status === "Cancelada").length;
   const sentMessages = monthMessages.filter((row) => row.status === "Enviado").length;
-  const callsBars = normalizeBars(snapshot.trend.slice(-7).map((item) => item.calls));
-  const apptBars = normalizeBars(snapshot.trend.slice(-7).map((item) => item.appointments));
   const stabilityRows = [
     {
       label: "Atencion de llamadas",
@@ -86,40 +79,8 @@ export default async function DashboardPage({ searchParams }: { searchParams?: {
         <MonthSelectForm selectedMonth={snapshot.month} options={monthState.options} />
       </header>
 
-      <section className="grid gap-4 xl:grid-cols-4">
-        <div className="xl:col-span-2">
-          <DashboardHeroCard
-            title="Analitica de llamadas"
-            href="/llamadas"
-            primaryLabel={callsCard.label}
-            primaryValue={callsCard.value}
-            primaryDelta={callsCard.delta}
-            secondaryLabel="Atendidas"
-            secondaryValue={attendedCalls.toLocaleString()}
-            secondaryDelta={formatRatioDelta(attendedCalls, allCalls.length)}
-            bars={callsBars}
-            periodLabel="Lun a Dom"
-          />
-        </div>
-
-        <div className="xl:col-span-2">
-          <DashboardHeroCard
-            title="Analitica de citas"
-            href="/citas"
-            primaryLabel={appointmentsCard.label}
-            primaryValue={appointmentsCard.value}
-            primaryDelta={appointmentsCard.delta}
-            secondaryLabel="Confirmadas"
-            secondaryValue={confirmedAppointments.toLocaleString()}
-            secondaryDelta={`${canceledAppointments.toLocaleString()} canceladas`}
-            bars={apptBars}
-            periodLabel="Lun a Dom"
-          />
-        </div>
-      </section>
-
-      <section className="grid gap-4 md:grid-cols-2">
-        {secondaryCards.map((item) => (
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {cards.map((item) => (
           <KpiCard key={item.label} item={item} />
         ))}
       </section>
@@ -202,15 +163,4 @@ function formatDeltaPoint(value: number) {
 function formatPercent(numerator: number, denominator: number) {
   if (!denominator) return "N/A";
   return `${((numerator / denominator) * 100).toFixed(1)}%`;
-}
-
-function formatRatioDelta(numerator: number, denominator: number) {
-  if (!denominator) return "N/A";
-  return `${((numerator / denominator) * 100).toFixed(1)}% del total`;
-}
-
-function normalizeBars(values: number[]) {
-  if (values.length === 0) return [35, 45, 60, 55, 72, 65, 78];
-  const max = Math.max(...values, 1);
-  return values.map((value) => Math.max(24, Math.min(95, Math.round((value / max) * 95))));
 }
