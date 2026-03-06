@@ -13,10 +13,10 @@ export default function LoginPage({ searchParams }: { searchParams?: { error?: s
           <section className="glass-card rounded-3xl p-8">
             <img src="/brand/loop-logo.svg" alt="LOOP" className="h-10 w-auto" />
             <p className="mt-3 text-xs uppercase tracking-[0.2em] text-slate">Loop Portal</p>
-            <h1 className="mt-2 text-4xl font-semibold leading-tight">Visualiza tu operacion en minutos</h1>
-            <p className="mt-4 max-w-lg text-slate">
-              Accede a llamadas, citas y reportes en una interfaz limpia, clara y pensada para decisiones rapidas.
-            </p>
+          <h1 className="mt-2 text-4xl font-semibold leading-tight">Visualiza tu operacion en minutos</h1>
+          <p className="mt-4 max-w-lg text-slate">
+            Accede a tus metricas y reportes de forma simple, clara y accionable.
+          </p>
 
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
               <div className="glass-muted-block rounded-2xl p-3 text-sm">Llamadas en tiempo real</div>
