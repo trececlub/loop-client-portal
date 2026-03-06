@@ -49,7 +49,7 @@ export function LoginIntroGate({ children, skipIntro = false }: LoginIntroGatePr
         type="button"
         disabled={!canContinue}
         onClick={() => setShowContent(true)}
-        className={`mx-auto flex min-h-[78vh] w-full max-w-4xl flex-col items-center justify-center text-center transition ${
+        className={`mx-auto flex min-h-[82vh] w-full max-w-5xl flex-col items-center justify-end pb-14 text-center transition sm:pb-24 ${
           canContinue ? "cursor-pointer" : "cursor-default"
         }`}
       >
