@@ -57,11 +57,22 @@ export function OrbBackground() {
               animation: "loopGlowPulse 5.2s ease-in-out infinite",
             }}
           />
-          <img
-            src="/brand/loop-icon.svg"
-            alt="Icono LOOP"
-            className="relative h-[62%] w-[62%] object-contain"
-            style={{ filter: "drop-shadow(0 0 16px rgba(56,189,248,0.32))" }}
+          <div
+            aria-label="Icono LOOP"
+            className="relative h-[62%] w-[62%]"
+            style={{
+              background:
+                "linear-gradient(145deg, rgba(243,252,255,0.98) 0%, rgba(216,244,255,0.94) 42%, rgba(155,223,255,0.92) 100%)",
+              WebkitMaskImage: "url('/brand/loop-icon.svg')",
+              maskImage: "url('/brand/loop-icon.svg')",
+              WebkitMaskRepeat: "no-repeat",
+              maskRepeat: "no-repeat",
+              WebkitMaskSize: "contain",
+              maskSize: "contain",
+              WebkitMaskPosition: "center",
+              maskPosition: "center",
+              filter: "drop-shadow(0 0 16px rgba(56,189,248,0.32))",
+            }}
           />
         </div>
       </div>
