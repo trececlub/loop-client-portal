@@ -38,21 +38,12 @@ export function OrbBackground() {
         <div
           className="loop-icon-float relative flex items-center justify-center"
           style={{
-            width: "clamp(220px, 18vmax, 320px)",
-            height: "clamp(220px, 18vmax, 320px)",
+            width: "clamp(330px, 27vmax, 480px)",
+            height: "clamp(330px, 27vmax, 480px)",
             transform: "perspective(900px) rotateX(10deg) rotateY(-8deg)",
             transformStyle: "preserve-3d",
           }}
         >
-          <div
-            className="absolute inset-[-24%]"
-            style={{
-              background:
-                "radial-gradient(circle at center, rgba(56,189,248,0.42) 0%, rgba(56,189,248,0.14) 46%, rgba(56,189,248,0) 84%)",
-              filter: "blur(20px)",
-              animation: "loopGlowPulse 5.2s ease-in-out infinite",
-            }}
-          />
           <div
             aria-label="Icono LOOP"
             className="relative h-full w-full"
@@ -68,7 +59,7 @@ export function OrbBackground() {
               WebkitMaskPosition: "center",
               maskPosition: "center",
               filter:
-                "drop-shadow(0 0 20px rgba(56,189,248,0.34)) drop-shadow(0 18px 28px rgba(16,33,38,0.22))",
+                "drop-shadow(0 18px 28px rgba(16,33,38,0.24))",
             }}
           />
           <div
