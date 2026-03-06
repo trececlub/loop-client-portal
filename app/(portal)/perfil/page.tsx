@@ -12,27 +12,22 @@ export default async function ProfilePage() {
         <h1 className="mt-1 text-3xl font-semibold">Perfil</h1>
       </header>
 
-      <section className="grid gap-4 md:grid-cols-2">
-        <article className="rounded-2xl border border-slate/20 bg-white p-4 shadow-card">
-          <p className="text-xs uppercase tracking-[0.14em] text-slate">Usuario</p>
-          <p className="mt-2 text-lg font-medium">{session.user.email}</p>
-          <p className="mt-1 text-sm text-slate">Rol: {session.role}</p>
-        </article>
-        <article className="rounded-2xl border border-slate/20 bg-white p-4 shadow-card">
-          {session.role === "CLIENTE" ? (
-            <>
-              <p className="text-xs uppercase tracking-[0.14em] text-slate">Cliente</p>
-              <p className="mt-2 text-lg font-medium">{session.clientName}</p>
-              <p className="mt-1 text-sm text-slate">Codigo asignado: {session.assignedClientCode}</p>
-            </>
-          ) : (
-            <>
-              <p className="text-xs uppercase tracking-[0.14em] text-slate">Perfil administrativo</p>
-              <p className="mt-2 text-lg font-medium">Sin codigo de cliente asignado</p>
-              <p className="mt-1 text-sm text-slate">Contexto actual de vista: {session.clientCode}</p>
-            </>
-          )}
-        </article>
+      <section className="rounded-2xl border border-slate/20 bg-white p-5 shadow-card">
+        <p className="text-xs uppercase tracking-[0.14em] text-slate">Credencial activa</p>
+        <div className="mt-4 grid gap-3 md:grid-cols-3">
+          <div className="rounded-xl border border-slate/15 bg-bg px-3 py-2">
+            <p className="text-xs uppercase tracking-[0.12em] text-slate">Nombre</p>
+            <p className="mt-1 text-sm font-medium text-ink">{session.user.name}</p>
+          </div>
+          <div className="rounded-xl border border-slate/15 bg-bg px-3 py-2">
+            <p className="text-xs uppercase tracking-[0.12em] text-slate">Email</p>
+            <p className="mt-1 text-sm font-medium text-ink">{session.user.email}</p>
+          </div>
+          <div className="rounded-xl border border-slate/15 bg-bg px-3 py-2">
+            <p className="text-xs uppercase tracking-[0.12em] text-slate">Rol</p>
+            <p className="mt-1 text-sm font-medium text-ink">{session.role}</p>
+          </div>
+        </div>
       </section>
 
       <section className="rounded-2xl border border-slate/20 bg-white p-4 shadow-card">
