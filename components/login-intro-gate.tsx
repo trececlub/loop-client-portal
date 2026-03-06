@@ -49,15 +49,17 @@ export function LoginIntroGate({ children, skipIntro = false }: LoginIntroGatePr
         type="button"
         disabled={!canContinue}
         onClick={() => setShowContent(true)}
-        className={`mx-auto flex min-h-[82vh] w-full max-w-5xl flex-col items-center justify-end pb-14 text-center transition sm:pb-24 ${
+        className={`mx-auto flex min-h-[82vh] w-full max-w-5xl flex-col items-center justify-center text-center transition ${
           canContinue ? "cursor-pointer" : "cursor-default"
         }`}
       >
-        <p className="portal-kicker">LOOP Portal</p>
-        <h1 className="mt-3 text-3xl font-semibold leading-tight text-ink sm:text-5xl">
-          {readyToContinue ? "Da clic para continuar" : typed}
-          {!readyToContinue && <span className="ml-1 inline-block animate-pulse text-sky">|</span>}
-        </h1>
+        <div className="mt-[clamp(180px,15vmax,250px)]">
+          <p className="portal-kicker">LOOP Portal</p>
+          <h1 className="mt-3 text-3xl font-semibold leading-tight text-ink sm:text-5xl">
+            {readyToContinue ? "Da clic para continuar" : typed}
+            {!readyToContinue && <span className="ml-1 inline-block animate-pulse text-sky">|</span>}
+          </h1>
+        </div>
       </button>
     </div>
   );

@@ -15,8 +15,8 @@ export function OrbBackground() {
       <div
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
         style={{
-          width: "clamp(860px, 108vmin, 1400px)",
-          height: "clamp(860px, 108vmin, 1400px)",
+          width: "clamp(720px, 92vmin, 1160px)",
+          height: "clamp(720px, 92vmin, 1160px)",
           opacity: 0.62,
           filter: "blur(1.2px)",
           WebkitMaskImage:
@@ -38,8 +38,8 @@ export function OrbBackground() {
         <div
           className="loop-icon-float relative flex items-center justify-center"
           style={{
-            width: "clamp(330px, 27vmax, 480px)",
-            height: "clamp(330px, 27vmax, 480px)",
+            width: "clamp(250px, 21vmax, 380px)",
+            height: "clamp(250px, 21vmax, 380px)",
           }}
         >
           <div
