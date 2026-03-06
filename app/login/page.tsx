@@ -19,9 +19,9 @@ export default function LoginPage({ searchParams }: { searchParams?: { error?: s
           </p>
 
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
-              <div className="glass-muted-block rounded-2xl p-3 text-sm">Llamadas en tiempo real</div>
-              <div className="glass-muted-block rounded-2xl p-3 text-sm">Comparativas mensuales</div>
-              <div className="glass-muted-block rounded-2xl p-3 text-sm">Descarga de reportes</div>
+              <div className="glass-muted-block rounded-2xl p-3 text-sm">Monitoreo de llamadas recibidas</div>
+              <div className="glass-muted-block rounded-2xl p-3 text-sm">Analisis mensual de rendimiento</div>
+              <div className="glass-muted-block rounded-2xl p-3 text-sm">Exportacion de reportes</div>
             </div>
           </section>
 
