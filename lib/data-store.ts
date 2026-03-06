@@ -7,6 +7,7 @@ export type UserPolicyError =
   | "forbidden"
   | "not_found"
   | "duplicate_email"
+  | "missing_fields"
   | "missing_email"
   | "cannot_delete_self"
   | "invalid_client_code";
@@ -469,6 +470,8 @@ export async function updatePortalUser(input: {
   actorRole: PortalRole;
   actorUserId: string;
   targetUserId: string;
+  name: string;
+  email: string;
   role: PortalRole;
   status: UserStatus;
   clientCode: string | null;
@@ -483,6 +486,22 @@ export async function updatePortalUser(input: {
     return { ok: false as const, error: "forbidden" as UserPolicyError };
   }
 
+  if (!input.name.trim()) {
+    return { ok: false as const, error: "missing_fields" as UserPolicyError };
+  }
+
+  const normalizedEmail = input.email.trim().toLowerCase();
+  if (!normalizedEmail) {
+    return { ok: false as const, error: "missing_email" as UserPolicyError };
+  }
+
+  const emailInUse = data.users.some(
+    (user) => user.id !== input.targetUserId && user.email.toLowerCase() === normalizedEmail,
+  );
+  if (emailInUse) {
+    return { ok: false as const, error: "duplicate_email" as UserPolicyError };
+  }
+
   if (input.role === "CLIENTE") {
     const foundClient = data.clients.find((client) => client.code === input.clientCode);
     if (!foundClient) {
@@ -493,6 +512,8 @@ export async function updatePortalUser(input: {
   const nextPassword = input.password && input.password.trim().length > 0 ? input.password.trim() : target.password;
   data.users[userIndex] = {
     ...target,
+    name: input.name.trim(),
+    email: normalizedEmail,
     role: input.role,
     status: input.status,
     clientCode: input.role === "CLIENTE" ? input.clientCode : null,

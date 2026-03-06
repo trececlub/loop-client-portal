@@ -74,17 +74,22 @@ export async function updateUserAction(formData: FormData) {
   }
 
   const targetUserId = String(formData.get("targetUserId") || "").trim();
+  const name = String(formData.get("name") || "").trim();
+  const email = String(formData.get("email") || "").trim();
   const role = String(formData.get("role") || "CLIENTE") as PortalRole;
   const status = String(formData.get("status") || "Active") as UserStatus;
   const clientCodeRaw = String(formData.get("clientCode") || "").trim();
   const password = String(formData.get("password") || "").trim();
 
   if (!targetUserId) redirect("/usuarios?error=not_found");
+  if (!name || !email) redirect("/usuarios?error=missing_fields");
 
   const result = await updatePortalUser({
     actorRole: session.role,
     actorUserId: session.user.id,
     targetUserId,
+    name,
+    email,
     role,
     status,
     clientCode: role === "CLIENTE" ? clientCodeRaw || session.clientCode : null,

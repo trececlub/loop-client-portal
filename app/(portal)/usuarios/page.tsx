@@ -120,12 +120,27 @@ export default async function UsersPage({
                     <td className="py-2.5">{row.email}</td>
                     <td className="py-2.5">{row.role}</td>
                     <td className="py-2.5">{row.status}</td>
-                    <td className="py-2.5">{row.clientCode || "-"}</td>
+                    <td className="py-2.5">
+                      {row.role === "CLIENTE" ? row.clientCode || "-" : <span className="text-slate">No aplica</span>}
+                    </td>
                     <td className="py-2.5">
                       <div className="flex flex-col gap-2">
                         {canEditRow && (
-                          <form action={updateUserAction} className="grid grid-cols-4 gap-2">
+                          <form action={updateUserAction} className="grid grid-cols-6 gap-2">
                             <input type="hidden" name="targetUserId" value={row.id} />
+                            <input
+                              name="name"
+                              defaultValue={row.name}
+                              className="col-span-2 rounded-lg border border-slate/20 bg-white px-2 py-1 text-xs"
+                              placeholder="Nombre"
+                            />
+                            <input
+                              name="email"
+                              type="email"
+                              defaultValue={row.email}
+                              className="col-span-2 rounded-lg border border-slate/20 bg-white px-2 py-1 text-xs"
+                              placeholder="Correo"
+                            />
                             <select name="role" defaultValue={row.role} className="rounded-lg border border-slate/20 bg-white px-2 py-1 text-xs">
                               {roleOptions.map((role) => (
                                 <option key={role} value={role}>
@@ -140,22 +155,31 @@ export default async function UsersPage({
                                 </option>
                               ))}
                             </select>
-                            <select
-                              name="clientCode"
-                              defaultValue={row.clientCode || session.clientCode}
-                              className="rounded-lg border border-slate/20 bg-white px-2 py-1 text-xs"
-                            >
-                              {clients.map((client) => (
-                                <option key={client.code} value={client.code}>
-                                  {client.code}
-                                </option>
-                              ))}
-                            </select>
+                            {row.role === "CLIENTE" ? (
+                              <select
+                                name="clientCode"
+                                defaultValue={row.clientCode || session.clientCode}
+                                className="col-span-2 rounded-lg border border-slate/20 bg-white px-2 py-1 text-xs"
+                              >
+                                {clients.map((client) => (
+                                  <option key={client.code} value={client.code}>
+                                    {client.code}
+                                  </option>
+                                ))}
+                              </select>
+                            ) : (
+                              <>
+                                <input type="hidden" name="clientCode" value="" />
+                                <div className="col-span-2 rounded-lg border border-dashed border-slate/30 bg-bg px-2 py-1 text-xs text-slate">
+                                  Sin codigo (rol administrativo)
+                                </div>
+                              </>
+                            )}
                             <button className="rounded-lg border border-slate/20 bg-bg px-2 py-1 text-xs">Modificar</button>
                             <input
                               name="password"
                               placeholder="Nueva pass (opcional)"
-                              className="col-span-4 rounded-lg border border-slate/20 bg-white px-2 py-1 text-xs"
+                              className="col-span-6 rounded-lg border border-slate/20 bg-white px-2 py-1 text-xs"
                             />
                           </form>
                         )}
