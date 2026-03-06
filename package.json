@@ -4,8 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:3002": "next dev -p 3002",
     "build": "next build",
     "start": "next start",
+    "start:3002": "next start -p 3002",
+    "reset:next": "rm -rf .next",
+    "fix:3002": "npm run reset:next && npm run dev:3002",
     "lint": "next lint"
   },
   "dependencies": {
