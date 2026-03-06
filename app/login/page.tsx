@@ -8,7 +8,7 @@ export default function LoginPage({ searchParams }: { searchParams?: { error?: s
       <div className="pointer-events-none absolute -right-12 bottom-12 h-72 w-72 rounded-full bg-sky/20 blur-3xl" />
 
       <div className="mx-auto grid w-full max-w-5xl grid-cols-1 gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-        <section className="rounded-3xl border border-slate/20 bg-white p-8 shadow-card">
+        <section className="rounded-3xl border border-slate/20 bg-white/95 p-8 shadow-card backdrop-blur-sm">
           <p className="text-xs uppercase tracking-[0.2em] text-slate">Loop Portal</p>
           <h1 className="mt-2 text-4xl font-semibold leading-tight">Visualiza tu operacion en minutos</h1>
           <p className="mt-4 max-w-lg text-slate">
@@ -22,7 +22,7 @@ export default function LoginPage({ searchParams }: { searchParams?: { error?: s
           </div>
         </section>
 
-        <section className="rounded-3xl border border-slate/20 bg-white p-8 shadow-card">
+        <section className="rounded-3xl border border-slate/20 bg-white/95 p-8 shadow-card backdrop-blur-sm">
           <h2 className="text-2xl font-semibold">Iniciar sesion</h2>
           <p className="mt-2 text-sm text-slate">Ingresa con tus credenciales de cliente.</p>
 
@@ -47,7 +47,7 @@ export default function LoginPage({ searchParams }: { searchParams?: { error?: s
               />
             </div>
             {hasError && <p className="rounded-lg border border-coral/30 bg-coral/10 px-3 py-2 text-sm text-coral">Credenciales invalidas.</p>}
-            <button className="inline-flex w-full items-center justify-center rounded-xl bg-ink px-4 py-3 text-sm font-medium text-white hover:bg-ink/90">
+            <button className="inline-flex w-full items-center justify-center rounded-xl bg-ink px-4 py-3 text-sm font-medium text-white transition hover:-translate-y-[1px] hover:bg-ink/90">
               Entrar al portal
             </button>
           </form>

@@ -33,13 +33,13 @@ export default async function ProfilePage() {
   return (
     <div className="space-y-6">
       <header>
-        <p className="text-xs uppercase tracking-[0.18em] text-slate">Cuenta</p>
-        <h1 className="mt-1 text-3xl font-semibold">Perfil</h1>
-        <p className="mt-2 text-sm text-slate">{roleSummary[session.role]}</p>
+        <p className="portal-kicker">Cuenta</p>
+        <h1 className="portal-title">Perfil</h1>
+        <p className="portal-subtitle">{roleSummary[session.role]}</p>
       </header>
 
       <section className="grid gap-4 md:grid-cols-2">
-        <article className="rounded-2xl border border-slate/20 bg-white p-5 shadow-card">
+        <article className="portal-card p-5">
           <p className="text-xs uppercase tracking-[0.14em] text-slate">Credencial activa</p>
           <div className="mt-4 grid gap-3">
             <Field label="Nombre" value={session.user.name} />
@@ -50,16 +50,16 @@ export default async function ProfilePage() {
           </div>
         </article>
 
-        <article className="rounded-2xl border border-slate/20 bg-white p-5 shadow-card">
+        <article className="portal-card p-5">
           <p className="text-xs uppercase tracking-[0.14em] text-slate">Alcance del perfil</p>
           <div className="mt-4 space-y-3">
-            <div className="rounded-xl border border-slate/15 bg-bg px-3 py-2">
+            <div className="portal-card-soft px-3 py-2">
               <p className="text-xs uppercase tracking-[0.12em] text-slate">Tipo de acceso</p>
               <p className="mt-1 text-sm font-medium text-ink">
                 {isAdminRole ? "Administrativo multi-cliente" : "Cliente informativo"}
               </p>
             </div>
-            <div className="rounded-xl border border-slate/15 bg-bg px-3 py-2">
+            <div className="portal-card-soft px-3 py-2">
               <p className="text-xs uppercase tracking-[0.12em] text-slate">Cliente asociado</p>
               <p className="mt-1 text-sm font-medium text-ink">
                 {session.role === "CLIENTE"
@@ -67,7 +67,7 @@ export default async function ProfilePage() {
                   : "No aplica para roles administrativos"}
               </p>
             </div>
-            <div className="rounded-xl border border-slate/15 bg-bg px-3 py-2">
+            <div className="portal-card-soft px-3 py-2">
               <p className="text-xs uppercase tracking-[0.12em] text-slate">Modulos visibles</p>
               <p className="mt-1 text-sm font-medium text-ink">{moduleAccess.join(", ")}</p>
             </div>
@@ -75,30 +75,27 @@ export default async function ProfilePage() {
         </article>
       </section>
 
-      <section className="rounded-2xl border border-slate/20 bg-white p-5 shadow-card">
+      <section className="portal-card p-5">
         <p className="text-xs uppercase tracking-[0.14em] text-slate">Permisos del rol</p>
         <div className="mt-4 grid gap-3 md:grid-cols-2">
-          {permissions.map((item) => (
-            <article key={item.title} className="rounded-xl border border-slate/15 bg-bg px-3 py-3">
+          {permissions.map((item) => {
+            const statusClass = item.status === "allowed" ? "portal-pill-ok" : "portal-pill-warn";
+            return (
+              <article key={item.title} className="portal-card-soft px-3 py-3">
               <div className="flex items-center justify-between gap-2">
                 <p className="text-sm font-medium text-ink">{item.title}</p>
-                <span
-                  className={`rounded-full px-2 py-0.5 text-xs ${
-                    item.status === "allowed"
-                      ? "bg-mint/15 text-mint"
-                      : "bg-coral/15 text-coral"
-                  }`}
-                >
+                <span className={`portal-pill ${statusClass}`}>
                   {item.status === "allowed" ? "Permitido" : "Restringido"}
                 </span>
               </div>
               <p className="mt-2 text-xs text-slate">{item.detail}</p>
             </article>
-          ))}
+            );
+          })}
         </div>
       </section>
 
-      <section className="rounded-2xl border border-slate/20 bg-white p-4 shadow-card">
+      <section className="portal-card p-4">
         <p className="text-sm text-slate">Para cerrar sesion usa el boton "Salir" en la esquina superior.</p>
       </section>
     </div>
@@ -107,7 +104,7 @@ export default async function ProfilePage() {
 
 function Field({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-slate/15 bg-bg px-3 py-2">
+    <div className="portal-card-soft px-3 py-2">
       <p className="text-xs uppercase tracking-[0.12em] text-slate">{label}</p>
       <p className="mt-1 text-sm font-medium text-ink">{value}</p>
     </div>
