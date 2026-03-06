@@ -40,16 +40,33 @@ export function OrbBackground() {
           style={{
             width: "clamp(330px, 27vmax, 480px)",
             height: "clamp(330px, 27vmax, 480px)",
-            transform: "perspective(900px) rotateX(10deg) rotateY(-8deg)",
+            transform: "perspective(980px) rotateX(12deg) rotateY(-9deg)",
             transformStyle: "preserve-3d",
           }}
         >
+          <div
+            className="absolute h-full w-full"
+            style={{
+              background:
+                "linear-gradient(158deg, rgba(27,59,77,0.7) 0%, rgba(22,48,62,0.78) 52%, rgba(15,35,47,0.88) 100%)",
+              WebkitMaskImage: "url('/brand/loop-icon.svg')",
+              maskImage: "url('/brand/loop-icon.svg')",
+              WebkitMaskRepeat: "no-repeat",
+              maskRepeat: "no-repeat",
+              WebkitMaskSize: "contain",
+              maskSize: "contain",
+              WebkitMaskPosition: "center",
+              maskPosition: "center",
+              transform: "translate3d(12px, 16px, -1px)",
+              filter: "blur(0.35px) drop-shadow(0 18px 24px rgba(10,26,35,0.34))",
+            }}
+          />
           <div
             aria-label="Icono LOOP"
             className="relative h-full w-full"
             style={{
               background:
-                "linear-gradient(145deg, rgba(251,254,255,0.98) 0%, rgba(224,247,255,0.95) 36%, rgba(166,229,255,0.94) 100%)",
+                "linear-gradient(152deg, rgba(254,255,255,0.98) 0%, rgba(235,251,255,0.97) 24%, rgba(191,236,255,0.94) 56%, rgba(146,216,246,0.9) 100%)",
               WebkitMaskImage: "url('/brand/loop-icon.svg')",
               maskImage: "url('/brand/loop-icon.svg')",
               WebkitMaskRepeat: "no-repeat",
@@ -59,7 +76,23 @@ export function OrbBackground() {
               WebkitMaskPosition: "center",
               maskPosition: "center",
               filter:
-                "drop-shadow(0 18px 28px rgba(16,33,38,0.24))",
+                "drop-shadow(0 1px 0 rgba(255,255,255,0.6)) drop-shadow(0 14px 24px rgba(16,33,38,0.24))",
+            }}
+          />
+          <div
+            className="absolute h-full w-full"
+            style={{
+              background:
+                "linear-gradient(148deg, rgba(255,255,255,0.36) 0%, rgba(255,255,255,0.08) 38%, rgba(255,255,255,0) 68%)",
+              WebkitMaskImage: "url('/brand/loop-icon.svg')",
+              maskImage: "url('/brand/loop-icon.svg')",
+              WebkitMaskRepeat: "no-repeat",
+              maskRepeat: "no-repeat",
+              WebkitMaskSize: "contain",
+              maskSize: "contain",
+              WebkitMaskPosition: "center",
+              maskPosition: "center",
+              transform: "translate3d(-2px, -4px, 1px)",
             }}
           />
           <div
@@ -75,7 +108,22 @@ export function OrbBackground() {
               maskSize: "contain",
               WebkitMaskPosition: "center",
               maskPosition: "center",
-              transform: "translate3d(8px, -8px, 0)",
+              transform: "translate3d(10px, -10px, 2px)",
+            }}
+          />
+          <div
+            className="absolute h-full w-full"
+            style={{
+              background:
+                "radial-gradient(circle at 42% 24%, rgba(255,255,255,0.34) 0%, rgba(255,255,255,0.08) 26%, rgba(255,255,255,0) 56%)",
+              WebkitMaskImage: "url('/brand/loop-icon.svg')",
+              maskImage: "url('/brand/loop-icon.svg')",
+              WebkitMaskRepeat: "no-repeat",
+              maskRepeat: "no-repeat",
+              WebkitMaskSize: "contain",
+              maskSize: "contain",
+              WebkitMaskPosition: "center",
+              maskPosition: "center",
             }}
           />
         </div>
