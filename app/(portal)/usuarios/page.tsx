@@ -48,7 +48,6 @@ export default async function UsersPage({
   const rows = filterActive ? allUsers.filter((user) => user.status === "Active") : allUsers;
 
   const creatableRoles = roleOptions.filter((role) => canActorCreateUser(session.role, role));
-  const canModify = canActorModifyUser(session.role);
 
   return (
     <div className="space-y-6">
@@ -113,7 +112,8 @@ export default async function UsersPage({
             <tbody>
               {rows.map((row) => {
                 const canDelete = canActorDeleteUser(session.role, row.role) && row.id !== session.user.id;
-                const canEditRow = canModify;
+                const canEditRow = canActorModifyUser(session.role, row.role);
+                const editableRoles = roleOptions.filter((role) => canActorCreateUser(session.role, role));
                 return (
                   <tr key={row.id} className="border-t border-slate/10 align-top">
                     <td className="py-2.5">{row.name}</td>
@@ -142,7 +142,7 @@ export default async function UsersPage({
                               placeholder="Correo"
                             />
                             <select name="role" defaultValue={row.role} className="rounded-lg border border-slate/20 bg-white px-2 py-1 text-xs">
-                              {roleOptions.map((role) => (
+                              {editableRoles.map((role) => (
                                 <option key={role} value={role}>
                                   {role}
                                 </option>

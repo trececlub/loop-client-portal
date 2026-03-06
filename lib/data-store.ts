@@ -482,7 +482,11 @@ export async function updatePortalUser(input: {
   if (userIndex === -1) return { ok: false as const, error: "not_found" as UserPolicyError };
 
   const target = data.users[userIndex];
-  if (!canActorModifyUser(input.actorRole)) {
+  if (!canActorModifyUser(input.actorRole, target.role)) {
+    return { ok: false as const, error: "forbidden" as UserPolicyError };
+  }
+
+  if (!canActorCreateUser(input.actorRole, input.role)) {
     return { ok: false as const, error: "forbidden" as UserPolicyError };
   }
 
@@ -588,8 +592,11 @@ export async function listClientOptions() {
   return data.clients;
 }
 
-export function canActorModifyUser(actorRole: PortalRole) {
-  return actorRole === "CTO";
+export function canActorModifyUser(actorRole: PortalRole, targetRole: PortalRole) {
+  if (actorRole === "CTO") return true;
+  if (actorRole === "CEO") return targetRole !== "CTO";
+  if (actorRole === "OPERARIO") return targetRole !== "CTO" && targetRole !== "CEO";
+  return false;
 }
 
 export function canActorDeleteUser(actorRole: PortalRole, targetRole: PortalRole) {
