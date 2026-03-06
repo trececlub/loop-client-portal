@@ -1,24 +1,30 @@
 "use client";
 
 import Orb from "@/components/orb";
+import { usePathname } from "next/navigation";
 
 export function OrbBackground() {
+  const pathname = usePathname();
+  const isLoginView = pathname === "/login";
+
   return (
     <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
       <div
         className="absolute inset-[-18%]"
         style={{
-          background:
-            "radial-gradient(circle at 50% 50%, rgba(58,141,222,0.12) 0%, rgba(58,141,222,0.05) 38%, transparent 74%)",
+          background: isLoginView
+            ? "radial-gradient(circle at 50% 50%, rgba(58,141,222,0.12) 0%, rgba(58,141,222,0.05) 38%, transparent 74%)"
+            : "radial-gradient(circle at 50% 50%, rgba(58,141,222,0.06) 0%, rgba(58,141,222,0.02) 34%, transparent 72%)",
         }}
       />
       <div
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2"
         style={{
-          width: "clamp(720px, 92vmin, 1160px)",
-          height: "clamp(720px, 92vmin, 1160px)",
-          opacity: 0.62,
-          filter: "blur(1.2px)",
+          top: isLoginView ? "50%" : "46%",
+          width: isLoginView ? "clamp(720px, 92vmin, 1160px)" : "clamp(620px, 78vmin, 980px)",
+          height: isLoginView ? "clamp(720px, 92vmin, 1160px)" : "clamp(620px, 78vmin, 980px)",
+          opacity: isLoginView ? 0.62 : 0.32,
+          filter: isLoginView ? "blur(1.2px)" : "blur(1.8px) saturate(0.62) brightness(0.82)",
           WebkitMaskImage:
             "radial-gradient(circle at center, rgba(0,0,0,1) 42%, rgba(0,0,0,0.92) 60%, rgba(0,0,0,0.24) 78%, rgba(0,0,0,0) 100%)",
           maskImage:
@@ -34,12 +40,15 @@ export function OrbBackground() {
         />
       </div>
 
-      <div className="absolute left-1/2 top-1/2 z-[1] -translate-x-1/2 -translate-y-1/2">
+      <div
+        className="absolute left-1/2 z-[1] -translate-x-1/2 -translate-y-1/2"
+        style={{ top: isLoginView ? "50%" : "46%", opacity: isLoginView ? 1 : 0.38 }}
+      >
         <div
           className="loop-icon-float relative flex items-center justify-center"
           style={{
-            width: "clamp(250px, 21vmax, 380px)",
-            height: "clamp(250px, 21vmax, 380px)",
+            width: isLoginView ? "clamp(250px, 21vmax, 380px)" : "clamp(180px, 15vmax, 280px)",
+            height: isLoginView ? "clamp(250px, 21vmax, 380px)" : "clamp(180px, 15vmax, 280px)",
           }}
         >
           <div

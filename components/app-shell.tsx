@@ -27,11 +27,12 @@ export function AppShell({ role, userName, children }: AppShellProps) {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-transparent text-ink">
+      <div className="pointer-events-none absolute inset-0 bg-white/28 backdrop-blur-[1.5px]" />
       <div className="pointer-events-none absolute -left-20 -top-16 h-72 w-72 rounded-full bg-sky/25 blur-3xl" />
       <div className="pointer-events-none absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-sky/20 blur-3xl" />
 
-      <div className="relative mx-auto grid min-h-screen w-full max-w-[1560px] grid-cols-1 gap-4 px-4 py-4 lg:grid-cols-[300px_1fr] lg:gap-5 lg:px-6">
-        <aside className="glass-shell p-4 text-ink">
+      <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-[1560px] grid-cols-1 gap-4 px-4 py-4 lg:grid-cols-[300px_1fr] lg:gap-5 lg:px-6">
+        <aside className="glass-shell border-white/50 bg-white/30 p-4 text-ink backdrop-blur-[12px]">
           <div className="pointer-events-none absolute -right-10 -top-6 h-36 w-36 rounded-full bg-white/20 blur-2xl" />
           <div className="pointer-events-none absolute -left-10 bottom-6 h-40 w-40 rounded-full bg-white/16 blur-3xl" />
 
@@ -88,7 +89,7 @@ export function AppShell({ role, userName, children }: AppShellProps) {
           </nav>
         </aside>
 
-        <div className="glass-shell">
+        <div className="glass-shell border-white/50 bg-white/28 backdrop-blur-[12px]">
           <header className="border-b border-slate/15 px-5 py-4 sm:px-7">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
