@@ -49,11 +49,14 @@ export function LoginIntroGate({ children, skipIntro = false }: LoginIntroGatePr
         type="button"
         disabled={!canContinue}
         onClick={() => setShowContent(true)}
-        className={`mx-auto flex min-h-[82vh] w-full max-w-5xl flex-col items-center justify-center text-center transition ${
+        className={`mx-auto relative min-h-[82vh] w-full max-w-5xl transition ${
           canContinue ? "cursor-pointer" : "cursor-default"
         }`}
       >
-        <div className="mt-[clamp(210px,17vmax,300px)]">
+        <div
+          className="absolute left-1/2 w-full max-w-4xl -translate-x-1/2 px-4 text-center"
+          style={{ top: "calc(50% + (clamp(250px, 21vmax, 380px) / 2) + 26px)" }}
+        >
           <p className="portal-kicker">LOOP Portal</p>
           <h1 className="mt-3 text-3xl font-semibold leading-tight text-ink sm:text-5xl">
             {readyToContinue ? "Da clic para continuar" : typed}
