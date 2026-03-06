@@ -34,11 +34,11 @@ export default async function ReportsPage({ searchParams }: { searchParams?: { m
           <MonthSelectForm
             selectedMonth={monthState.activeMonth}
             options={monthState.options}
-            className="rounded-xl border border-slate/20 bg-bg px-3 py-2 text-sm"
+            className="glass-card rounded-xl px-3 py-2 text-sm"
           />
           <a
             href={`/api/report?month=${monthState.activeMonth}`}
-            className="rounded-xl bg-ink px-4 py-2 text-sm font-medium text-white transition hover:-translate-y-[1px] hover:bg-ink/90"
+            className="glass-btn-soft rounded-xl px-4 py-2 text-sm font-medium transition hover:-translate-y-[1px]"
           >
             Descargar CSV
           </a>

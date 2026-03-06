@@ -44,11 +44,11 @@ export function AppShell({ role, userName, children }: AppShellProps) {
             <h1 className="mt-3 text-xl font-semibold">Client Portal</h1>
             <p className="mt-2 text-sm text-slate">Panel informativo para clientes y gestion interna.</p>
             <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
-              <div className="rounded-xl border border-white/35 bg-white/22 px-2.5 py-2">
+              <div className="rounded-xl border border-white/35 bg-white/20 px-2.5 py-2">
                 <p className="text-slate">Rol activo</p>
                 <p className="mt-0.5 font-semibold text-ink">{role}</p>
               </div>
-              <div className="rounded-xl border border-white/35 bg-white/22 px-2.5 py-2">
+              <div className="rounded-xl border border-white/35 bg-white/20 px-2.5 py-2">
                 <p className="text-slate">Sesion</p>
                 <p className="mt-0.5 font-semibold text-ink">Online</p>
               </div>
@@ -101,13 +101,13 @@ export function AppShell({ role, userName, children }: AppShellProps) {
               </div>
 
               <div className="flex items-center gap-2">
-                <div className="inline-flex items-center gap-2 rounded-xl border border-slate/20 bg-bg px-3 py-2 text-sm font-medium text-ink">
+                <div className="glass-muted-block inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-ink">
                   <span className="inline-block h-2 w-2 rounded-full bg-mint shadow-[0_0_0_4px_rgba(11,139,125,0.15)]" />
                   Operacion estable
                 </div>
                 <Link
                   href="/logout"
-                  className="rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm text-slate transition hover:-translate-y-[1px] hover:border-slate/30 hover:bg-slate-50"
+                  className="glass-btn-soft rounded-xl px-3 py-2 text-sm transition hover:-translate-y-[1px]"
                 >
                   Salir
                 </Link>

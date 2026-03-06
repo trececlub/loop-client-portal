@@ -29,6 +29,8 @@ const savedLabels: Record<string, string> = {
 
 const roleOptions: PortalRole[] = ["CLIENTE", "OPERARIO", "CEO", "CTO"];
 const statusOptions: UserStatus[] = ["Active", "Disabled", "Pending"];
+const fieldClass = "glass-field rounded-xl px-3 py-2 text-sm outline-none ring-mint/20 focus:ring";
+const compactFieldClass = "glass-field rounded-lg px-2 py-1 text-xs outline-none ring-mint/20 focus:ring";
 
 export default async function UsersPage({
   searchParams,
@@ -64,31 +66,31 @@ export default async function UsersPage({
         <div className="mb-4 flex flex-wrap gap-2">
           <Link
             href={filterActive ? "/usuarios" : "/usuarios?status=active"}
-            className="rounded-xl border border-slate/20 bg-bg px-3 py-2 text-sm transition hover:-translate-y-[1px] hover:border-slate/35"
+            className="glass-btn-soft rounded-xl px-3 py-2 text-sm transition hover:-translate-y-[1px]"
           >
             {filterActive ? "Ver todos" : "Filtrar activos"}
           </Link>
         </div>
 
-        <form action={createUserAction} className="grid gap-3 rounded-2xl border border-slate/15 bg-bg p-4 md:grid-cols-2">
-          <input name="name" required placeholder="Nombre" className="rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm outline-none ring-mint/20 focus:ring" />
-          <input name="email" required type="email" placeholder="email@empresa.com" className="rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm outline-none ring-mint/20 focus:ring" />
-          <input name="password" required type="password" placeholder="Contrasena" className="rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm outline-none ring-mint/20 focus:ring" />
-          <select name="role" className="rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm outline-none ring-mint/20 focus:ring" defaultValue={creatableRoles[0] || "CLIENTE"}>
+        <form action={createUserAction} className="glass-muted-block grid gap-3 rounded-2xl p-4 md:grid-cols-2">
+          <input name="name" required placeholder="Nombre" className={fieldClass} />
+          <input name="email" required type="email" placeholder="email@empresa.com" className={fieldClass} />
+          <input name="password" required type="password" placeholder="Contrasena" className={fieldClass} />
+          <select name="role" className={fieldClass} defaultValue={creatableRoles[0] || "CLIENTE"}>
             {creatableRoles.map((role) => (
               <option key={role} value={role}>
                 {role}
               </option>
             ))}
           </select>
-          <select name="status" className="rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm outline-none ring-mint/20 focus:ring" defaultValue="Active">
+          <select name="status" className={fieldClass} defaultValue="Active">
             {statusOptions.map((status) => (
               <option key={status} value={status}>
                 {status}
               </option>
             ))}
           </select>
-          <select name="clientCode" className="rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm outline-none ring-mint/20 focus:ring" defaultValue={session.clientCode}>
+          <select name="clientCode" className={fieldClass} defaultValue={session.clientCode}>
             {clients.map((client) => (
               <option key={client.code} value={client.code}>
                 {client.name} ({client.code})
@@ -138,24 +140,24 @@ export default async function UsersPage({
                             <input
                               name="name"
                               defaultValue={row.name}
-                              className="col-span-2 rounded-lg border border-slate/20 bg-white px-2 py-1 text-xs outline-none ring-mint/20 focus:ring"
+                              className={`col-span-2 ${compactFieldClass}`}
                               placeholder="Nombre"
                             />
                             <input
                               name="email"
                               type="email"
                               defaultValue={row.email}
-                              className="col-span-2 rounded-lg border border-slate/20 bg-white px-2 py-1 text-xs outline-none ring-mint/20 focus:ring"
+                              className={`col-span-2 ${compactFieldClass}`}
                               placeholder="Correo"
                             />
-                            <select name="role" defaultValue={row.role} className="rounded-lg border border-slate/20 bg-white px-2 py-1 text-xs outline-none ring-mint/20 focus:ring">
+                            <select name="role" defaultValue={row.role} className={compactFieldClass}>
                               {editableRoles.map((role) => (
                                 <option key={role} value={role}>
                                   {role}
                                 </option>
                               ))}
                             </select>
-                            <select name="status" defaultValue={row.status} className="rounded-lg border border-slate/20 bg-white px-2 py-1 text-xs outline-none ring-mint/20 focus:ring">
+                            <select name="status" defaultValue={row.status} className={compactFieldClass}>
                               {statusOptions.map((status) => (
                                 <option key={status} value={status}>
                                   {status}
@@ -166,7 +168,7 @@ export default async function UsersPage({
                               <select
                                 name="clientCode"
                                 defaultValue={row.clientCode || session.clientCode}
-                                className="col-span-2 rounded-lg border border-slate/20 bg-white px-2 py-1 text-xs outline-none ring-mint/20 focus:ring"
+                                className={`col-span-2 ${compactFieldClass}`}
                               >
                                 {clients.map((client) => (
                                   <option key={client.code} value={client.code}>
@@ -177,16 +179,16 @@ export default async function UsersPage({
                             ) : (
                               <>
                                 <input type="hidden" name="clientCode" value="" />
-                                <div className="col-span-2 rounded-lg border border-dashed border-slate/30 bg-bg px-2 py-1 text-xs text-slate">
+                                <div className="glass-muted-block col-span-2 rounded-lg border-dashed px-2 py-1 text-xs text-slate">
                                   Sin codigo (rol administrativo)
                                 </div>
                               </>
                             )}
-                            <button className="rounded-lg border border-slate/20 bg-bg px-2 py-1 text-xs transition hover:bg-slate-100">Modificar</button>
+                            <button className="glass-btn-soft rounded-lg px-2 py-1 text-xs transition">Modificar</button>
                             <input
                               name="password"
                               placeholder="Nueva pass (opcional)"
-                              className="col-span-6 rounded-lg border border-slate/20 bg-white px-2 py-1 text-xs outline-none ring-mint/20 focus:ring"
+                              className={`col-span-6 ${compactFieldClass}`}
                             />
                           </form>
                         )}
