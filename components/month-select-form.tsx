@@ -16,12 +16,12 @@ export function MonthSelectForm({
   className = "rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm shadow-card",
 }: MonthSelectFormProps) {
   return (
-    <form method="get" className={className}>
-      <label className="mr-2 text-slate">{label}</label>
+    <form method="get" className={`flex flex-wrap items-center gap-2 ${className}`}>
+      <label className="text-xs font-medium uppercase tracking-[0.12em] text-slate">{label}</label>
       <select
         name="month"
         defaultValue={selectedMonth}
-        className="rounded-md border border-slate/20 bg-bg px-2 py-1"
+        className="min-w-[210px] rounded-md border border-slate/20 bg-bg px-2 py-1.5 text-sm"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value} disabled={!option.enabled}>
@@ -29,7 +29,9 @@ export function MonthSelectForm({
           </option>
         ))}
       </select>
-      <button className="ml-2 rounded-md bg-ink px-3 py-1 text-white">{submitLabel}</button>
+      <button className="rounded-md bg-ink px-3 py-1.5 text-white transition hover:bg-ink/90">
+        {submitLabel}
+      </button>
     </form>
   );
 }
