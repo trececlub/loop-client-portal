@@ -98,7 +98,7 @@ export default async function DashboardPage({ searchParams }: { searchParams?: {
             secondaryValue={attendedCalls.toLocaleString()}
             secondaryDelta={formatRatioDelta(attendedCalls, allCalls.length)}
             bars={callsBars}
-            periodLabel="Ultimos 7 cortes"
+            periodLabel="Lun a Dom"
           />
         </div>
 
@@ -113,7 +113,7 @@ export default async function DashboardPage({ searchParams }: { searchParams?: {
             secondaryValue={confirmedAppointments.toLocaleString()}
             secondaryDelta={`${canceledAppointments.toLocaleString()} canceladas`}
             bars={apptBars}
-            periodLabel="Ultimos 7 cortes"
+            periodLabel="Lun a Dom"
           />
         </div>
       </section>

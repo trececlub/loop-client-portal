@@ -16,24 +16,24 @@ export function SimpleBarChart({ title, data, colorClass }: { title: string; dat
           </span>
         </div>
       </div>
-      <div className="mt-4 space-y-3">
-        {data.map((item) => {
-          const width = Math.max(Math.round((item.value / max) * 100), 4);
-          return (
-            <div key={item.label} className="space-y-1">
-              <div className="flex items-center justify-between text-xs text-slate">
-                <span>{item.label}</span>
-                <span>{item.value}</span>
+      <div className="mt-4">
+        <div className="grid h-44 grid-cols-7 items-end gap-2 rounded-xl border border-slate/15 bg-bg/70 px-2.5 py-3">
+          {data.map((item) => {
+            const height = Math.max(Math.round((item.value / max) * 100), 8);
+            return (
+              <div key={item.label} className="flex h-full flex-col items-center justify-end gap-1">
+                <span className="text-[10px] font-medium text-slate">{item.value}</span>
+                <div className="flex h-full w-full items-end">
+                  <div
+                    className={`w-full rounded-md bg-gradient-to-t shadow-[0_0_0_1px_rgba(255,255,255,0.2)_inset] ${colorClass}`}
+                    style={{ height: `${height}%` }}
+                  />
+                </div>
+                <span className="text-[11px] font-medium text-slate">{item.label}</span>
               </div>
-              <div className="h-2.5 rounded-full border border-slate/10 bg-bg">
-                <div
-                  className={`h-full rounded-full bg-gradient-to-r shadow-[0_0_0_1px_rgba(255,255,255,0.2)_inset] ${colorClass}`}
-                  style={{ width: `${width}%` }}
-                />
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </section>
   );

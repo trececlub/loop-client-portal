@@ -84,6 +84,17 @@ export type DashboardSnapshot = {
   trend: { day: string; calls: number; appointments: number }[];
 };
 
+const WEEKDAY_ORDER = [1, 2, 3, 4, 5, 6, 0] as const;
+const WEEKDAY_LABEL: Record<(typeof WEEKDAY_ORDER)[number], string> = {
+  0: "Dom",
+  1: "Lun",
+  2: "Mar",
+  3: "Mie",
+  4: "Jue",
+  5: "Vie",
+  6: "Sab",
+};
+
 const DATA_DIR = path.join(process.cwd(), "data");
 const DATA_FILE = path.join(DATA_DIR, "portal-data.json");
 
@@ -309,27 +320,32 @@ export async function getDashboardSnapshot(clientCode: string, monthKey?: string
   const prevMessages = messagesPrev.filter((row) => row.status === "Enviado").length;
   const prevConversion = safePercent(prevAppointments, prevCalls);
 
-  const dayBuckets = new Map<string, { calls: number; appointments: number }>();
-  for (let day = 1; day <= 31; day += 1) {
-    const key = String(day).padStart(2, "0");
-    dayBuckets.set(key, { calls: 0, appointments: 0 });
+  const weekdayBuckets = new Map<number, { calls: number; appointments: number }>();
+  for (const weekday of WEEKDAY_ORDER) {
+    weekdayBuckets.set(weekday, { calls: 0, appointments: 0 });
   }
 
   for (const row of callsCurrent) {
-    const day = row.startedAt.slice(8, 10);
-    const bucket = dayBuckets.get(day);
+    const weekday = new Date(row.startedAt).getDay();
+    const bucket = weekdayBuckets.get(weekday);
     if (bucket) bucket.calls += 1;
   }
 
   for (const row of appointmentsCurrent) {
-    const day = row.datetime.slice(8, 10);
-    const bucket = dayBuckets.get(day);
-    if (bucket && row.status !== "Cancelada") bucket.appointments += 1;
+    if (row.status === "Cancelada") continue;
+    const weekday = new Date(row.datetime).getDay();
+    const bucket = weekdayBuckets.get(weekday);
+    if (bucket) bucket.appointments += 1;
   }
 
-  const trend = Array.from(dayBuckets.entries())
-    .map(([day, values]) => ({ day, calls: values.calls, appointments: values.appointments }))
-    .filter((entry) => Number(entry.day) % 5 === 0 || entry.day === "01" || entry.day === "30");
+  const trend = WEEKDAY_ORDER.map((weekday) => {
+    const values = weekdayBuckets.get(weekday) || { calls: 0, appointments: 0 };
+    return {
+      day: WEEKDAY_LABEL[weekday],
+      calls: values.calls,
+      appointments: values.appointments,
+    };
+  });
 
   return {
     month: activeMonth,

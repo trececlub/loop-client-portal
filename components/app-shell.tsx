@@ -31,11 +31,11 @@ export function AppShell({ role, userName, children }: AppShellProps) {
       <div className="pointer-events-none absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-sky/20 blur-3xl" />
 
       <div className="relative mx-auto grid min-h-screen w-full max-w-[1560px] grid-cols-1 gap-4 px-4 py-4 lg:grid-cols-[300px_1fr] lg:gap-5 lg:px-6">
-        <aside className="relative overflow-hidden rounded-3xl border border-sky-200/40 bg-gradient-to-b from-[#0b5f9f] via-[#0a6fb4] to-[#0b7ac3] p-4 text-white shadow-[0_24px_60px_-28px_rgba(4,68,121,0.7)]">
-          <div className="pointer-events-none absolute -right-10 -top-6 h-36 w-36 rounded-full bg-white/20 blur-2xl" />
-          <div className="pointer-events-none absolute -left-10 bottom-6 h-40 w-40 rounded-full bg-cyan-100/20 blur-3xl" />
+        <aside className="relative overflow-hidden rounded-3xl border border-sky-200/25 bg-gradient-to-b from-[#031428] via-[#07213f] to-[#0a2f56] p-4 text-white shadow-[0_24px_60px_-28px_rgba(5,28,52,0.92)]">
+          <div className="pointer-events-none absolute -right-10 -top-6 h-36 w-36 rounded-full bg-sky-300/20 blur-2xl" />
+          <div className="pointer-events-none absolute -left-10 bottom-6 h-40 w-40 rounded-full bg-cyan-200/20 blur-3xl" />
 
-          <div className="relative rounded-2xl border border-white/30 bg-white/14 p-4 backdrop-blur">
+          <div className="relative rounded-2xl border border-white/25 bg-white/10 p-4 backdrop-blur">
             <img
               src="/brand/loop-logo.svg"
               alt="LOOP"
