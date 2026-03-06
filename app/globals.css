@@ -66,6 +66,32 @@ h4 {
   }
 }
 
+@keyframes loopIconMotion {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.04);
+  }
+}
+
+@keyframes loopGlowPulse {
+  0%,
+  100% {
+    opacity: 0.62;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 0.94;
+    transform: scale(1.05);
+  }
+}
+
+.loop-icon-float {
+  animation: loopIconMotion 7.5s ease-in-out infinite;
+}
+
 @layer components {
   .glass-card {
     position: relative;
