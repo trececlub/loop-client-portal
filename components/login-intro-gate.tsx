@@ -8,6 +8,7 @@ type LoginIntroGateProps = {
 };
 
 const WELCOME_TEXT = "Hola, bienvenido a LOOP Portal";
+const TYPING_INTERVAL_MS = 82;
 
 export function LoginIntroGate({ children, skipIntro = false }: LoginIntroGateProps) {
   const [typed, setTyped] = useState("");
@@ -29,7 +30,7 @@ export function LoginIntroGate({ children, skipIntro = false }: LoginIntroGatePr
           setReadyToContinue(true);
         }, 500);
       }
-    }, 44);
+    }, TYPING_INTERVAL_MS);
 
     return () => {
       window.clearInterval(typingTimer);
