@@ -1,14 +1,14 @@
 import { MonthSelectForm } from "@/components/month-select-form";
 import { getPortalSession } from "@/lib/auth";
 import { getMessagesForClient } from "@/lib/data-store";
-import { getMonthSelectionState } from "@/lib/month-selection";
+import { getOperationalMonthSelectionState } from "@/lib/month-selection";
 import { redirect } from "next/navigation";
 
 export default async function MessagesPage({ searchParams }: { searchParams?: { month?: string } }) {
   const session = await getPortalSession();
   if (!session) redirect("/login");
 
-  const monthState = await getMonthSelectionState(session.clientCode, searchParams?.month);
+  const monthState = await getOperationalMonthSelectionState(session.clientCode, searchParams?.month);
   const rows = await getMessagesForClient(session.clientCode, monthState.activeMonth);
 
   const sent = rows.filter((row) => row.status === "Enviado").length;

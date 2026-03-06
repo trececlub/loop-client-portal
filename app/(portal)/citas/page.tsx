@@ -1,14 +1,14 @@
 import { MonthSelectForm } from "@/components/month-select-form";
 import { getPortalSession } from "@/lib/auth";
 import { getAppointmentsForClient } from "@/lib/data-store";
-import { getMonthSelectionState } from "@/lib/month-selection";
+import { getOperationalMonthSelectionState } from "@/lib/month-selection";
 import { redirect } from "next/navigation";
 
 export default async function AppointmentsPage({ searchParams }: { searchParams?: { month?: string } }) {
   const session = await getPortalSession();
   if (!session) redirect("/login");
 
-  const monthState = await getMonthSelectionState(session.clientCode, searchParams?.month);
+  const monthState = await getOperationalMonthSelectionState(session.clientCode, searchParams?.month);
   const rows = await getAppointmentsForClient(session.clientCode, monthState.activeMonth);
 
   const scheduled = rows.filter((row) => row.status === "Agendada").length;

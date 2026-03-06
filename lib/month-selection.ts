@@ -44,6 +44,30 @@ export async function getMonthSelectionState(
   return { activeMonth, cutoffMonth, options };
 }
 
+export async function getOperationalMonthSelectionState(
+  clientCode: string,
+  requestedMonth?: string,
+): Promise<MonthSelectionState> {
+  const today = new Date();
+  const currentMonth = toMonthKey(today);
+  const availableMonths = await listAvailableMonthsForClient(clientCode);
+  const earliestMonth = availableMonths.at(-1) || currentMonth;
+  const monthKeys = buildMonthRangeDescending(currentMonth, earliestMonth);
+
+  const options = monthKeys.map((monthKey) => ({
+    value: monthKey,
+    label: monthKey === currentMonth ? `${formatMonthLabel(monthKey)} (En curso)` : formatMonthLabel(monthKey),
+    enabled: true,
+  }));
+
+  const allowedMonths = new Set(options.map((item) => item.value));
+  const normalizedRequested = normalizeMonth(requestedMonth);
+  const activeMonth =
+    normalizedRequested && allowedMonths.has(normalizedRequested) ? normalizedRequested : currentMonth;
+
+  return { activeMonth, cutoffMonth: currentMonth, options };
+}
+
 function normalizeMonth(value?: string) {
   if (!value) return "";
   return /^\d{4}-\d{2}$/.test(value) ? value : "";
