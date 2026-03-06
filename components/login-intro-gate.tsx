@@ -56,7 +56,7 @@ export function LoginIntroGate({ children, skipIntro = false }: LoginIntroGatePr
         <div
           className="absolute left-1/2 -translate-x-1/2 px-4 text-center"
           style={{
-            top: "calc(50% + clamp(170px, 14vmax, 230px))",
+            top: "calc(50% + clamp(225px, 19vmax, 330px))",
             width: "min(92vw, 960px)",
           }}
         >
