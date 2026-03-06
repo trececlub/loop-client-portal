@@ -53,7 +53,7 @@ export function LoginIntroGate({ children, skipIntro = false }: LoginIntroGatePr
           canContinue ? "cursor-pointer" : "cursor-default"
         }`}
       >
-        <div className="mt-[clamp(180px,15vmax,250px)]">
+        <div className="mt-[clamp(210px,17vmax,300px)]">
           <p className="portal-kicker">LOOP Portal</p>
           <h1 className="mt-3 text-3xl font-semibold leading-tight text-ink sm:text-5xl">
             {readyToContinue ? "Da clic para continuar" : typed}
