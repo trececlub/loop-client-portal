@@ -384,6 +384,25 @@ export async function getMessagesForClient(clientCode: string, monthKey?: string
     .map((row) => ({ ...row, datetime: formatDateTime(row.datetime) }));
 }
 
+export async function listAvailableMonthsForClient(clientCode: string) {
+  const data = await readPortalData();
+  const monthSet = new Set<string>();
+
+  for (const row of data.calls) {
+    if (row.clientCode === clientCode) monthSet.add(row.startedAt.slice(0, 7));
+  }
+
+  for (const row of data.appointments) {
+    if (row.clientCode === clientCode) monthSet.add(row.datetime.slice(0, 7));
+  }
+
+  for (const row of data.messages) {
+    if (row.clientCode === clientCode) monthSet.add(row.datetime.slice(0, 7));
+  }
+
+  return Array.from(monthSet).sort((a, b) => (a < b ? 1 : -1));
+}
+
 export async function getComparisonRows(clientCode: string, monthKey?: string) {
   const snapshot = await getDashboardSnapshot(clientCode, monthKey);
   const previous = snapshot.previousMonth;

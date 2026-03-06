@@ -1,15 +1,17 @@
 import { KpiCard } from "@/components/kpi-card";
+import { MonthSelectForm } from "@/components/month-select-form";
 import { SimpleBarChart } from "@/components/simple-bar-chart";
 import { getPortalSession } from "@/lib/auth";
 import { getCallsForClient, getDashboardSnapshot } from "@/lib/data-store";
+import { getMonthSelectionState } from "@/lib/month-selection";
 import { redirect } from "next/navigation";
 
 export default async function DashboardPage({ searchParams }: { searchParams?: { month?: string } }) {
   const session = await getPortalSession();
   if (!session) redirect("/login");
 
-  const month = searchParams?.month;
-  const snapshot = await getDashboardSnapshot(session.clientCode, month);
+  const monthState = await getMonthSelectionState(session.clientCode, searchParams?.month);
+  const snapshot = await getDashboardSnapshot(session.clientCode, monthState.activeMonth);
   const recentCalls = (await getCallsForClient(session.clientCode, snapshot.month)).slice(0, 6);
 
   const cards = [
@@ -49,11 +51,7 @@ export default async function DashboardPage({ searchParams }: { searchParams?: {
           <p className="text-xs uppercase tracking-[0.18em] text-slate">Resumen</p>
           <h1 className="mt-1 text-3xl font-semibold">Dashboard de rendimiento</h1>
         </div>
-        <form method="get" className="rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm shadow-card">
-          <label className="mr-2 text-slate">Mes</label>
-          <input name="month" defaultValue={snapshot.month} className="rounded-md border border-slate/20 bg-bg px-2 py-1" placeholder="2026-03" />
-          <button className="ml-2 rounded-md bg-ink px-3 py-1 text-white">Aplicar</button>
-        </form>
+        <MonthSelectForm selectedMonth={snapshot.month} options={monthState.options} />
       </header>
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">

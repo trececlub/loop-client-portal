@@ -1,13 +1,15 @@
+import { MonthSelectForm } from "@/components/month-select-form";
 import { getPortalSession } from "@/lib/auth";
 import { getComparisonRows, getDashboardSnapshot } from "@/lib/data-store";
+import { getMonthSelectionState } from "@/lib/month-selection";
 import { redirect } from "next/navigation";
 
 export default async function ComparativesPage({ searchParams }: { searchParams?: { month?: string } }) {
   const session = await getPortalSession();
   if (!session) redirect("/login");
 
-  const month = searchParams?.month;
-  const snapshot = await getDashboardSnapshot(session.clientCode, month);
+  const monthState = await getMonthSelectionState(session.clientCode, searchParams?.month);
+  const snapshot = await getDashboardSnapshot(session.clientCode, monthState.activeMonth);
   const rows = await getComparisonRows(session.clientCode, snapshot.month);
 
   return (
@@ -17,11 +19,12 @@ export default async function ComparativesPage({ searchParams }: { searchParams?
           <p className="text-xs uppercase tracking-[0.18em] text-slate">Analitica</p>
           <h1 className="mt-1 text-3xl font-semibold">Comparativas mensuales</h1>
         </div>
-        <form method="get" className="rounded-xl border border-slate/20 bg-white px-3 py-2 text-sm shadow-card">
-          <label className="mr-2 text-slate">Mes A</label>
-          <input name="month" defaultValue={snapshot.month} className="rounded-md border border-slate/20 bg-bg px-2 py-1" placeholder="2026-03" />
-          <button className="ml-2 rounded-md bg-ink px-3 py-1 text-white">Comparar</button>
-        </form>
+        <MonthSelectForm
+          label="Mes A"
+          selectedMonth={snapshot.month}
+          options={monthState.options}
+          submitLabel="Comparar"
+        />
       </header>
 
       <section className="rounded-2xl border border-slate/20 bg-white p-4 shadow-card">

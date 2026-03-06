@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { getReportRows, getPortalUserById, resolveClientCodeForUser } from "@/lib/data-store";
+import { getMonthSelectionState } from "@/lib/month-selection";
 
 export async function GET(request: Request) {
   const store = cookies();
@@ -18,7 +19,8 @@ export async function GET(request: Request) {
   const month = new URL(request.url).searchParams.get("month") || undefined;
   const currentCode = store.get("portal_client_code")?.value;
   const clientCode = await resolveClientCodeForUser(user, currentCode);
-  const rows = await getReportRows(clientCode, month);
+  const monthState = await getMonthSelectionState(clientCode, month);
+  const rows = await getReportRows(clientCode, monthState.activeMonth);
 
   const header = ["datetime", "module", "status", "detail", "reference"].join(",");
   const body = rows
@@ -29,7 +31,7 @@ export async function GET(request: Request) {
   return new NextResponse(csv, {
     headers: {
       "Content-Type": "text/csv; charset=utf-8",
-      "Content-Disposition": `attachment; filename=loop-report-${month || "current"}.csv`,
+      "Content-Disposition": `attachment; filename=loop-report-${monthState.activeMonth}.csv`,
     },
   });
 }

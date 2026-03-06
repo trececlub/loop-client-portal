@@ -1,13 +1,15 @@
+import { MonthSelectForm } from "@/components/month-select-form";
 import { getPortalSession } from "@/lib/auth";
 import { getReportRows } from "@/lib/data-store";
+import { getMonthSelectionState } from "@/lib/month-selection";
 import { redirect } from "next/navigation";
 
 export default async function ReportsPage({ searchParams }: { searchParams?: { month?: string } }) {
   const session = await getPortalSession();
   if (!session) redirect("/login");
 
-  const month = searchParams?.month || currentMonth();
-  const rows = await getReportRows(session.clientCode, month);
+  const monthState = await getMonthSelectionState(session.clientCode, searchParams?.month);
+  const rows = await getReportRows(session.clientCode, monthState.activeMonth);
 
   return (
     <div className="space-y-6">
@@ -18,16 +20,19 @@ export default async function ReportsPage({ searchParams }: { searchParams?: { m
 
       <section className="rounded-2xl border border-slate/20 bg-white p-4 shadow-card">
         <p className="text-sm text-slate">Selecciona el mes y descarga el reporte en CSV.</p>
-        <form className="mt-4 flex flex-wrap items-center gap-3" method="get">
-          <input name="month" defaultValue={month} className="rounded-xl border border-slate/20 bg-bg px-3 py-2 text-sm" placeholder="2026-03" />
-          <button className="rounded-xl border border-slate/20 bg-bg px-4 py-2 text-sm">Aplicar</button>
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <MonthSelectForm
+            selectedMonth={monthState.activeMonth}
+            options={monthState.options}
+            className="rounded-xl border border-slate/20 bg-bg px-3 py-2 text-sm"
+          />
           <a
-            href={`/api/report?month=${month}`}
+            href={`/api/report?month=${monthState.activeMonth}`}
             className="rounded-xl bg-ink px-4 py-2 text-sm font-medium text-white hover:bg-ink/90"
           >
             Descargar CSV
           </a>
-        </form>
+        </div>
       </section>
 
       <section className="rounded-2xl border border-slate/20 bg-white p-4 shadow-card">
@@ -59,11 +64,4 @@ export default async function ReportsPage({ searchParams }: { searchParams?: { m
       </section>
     </div>
   );
-}
-
-function currentMonth() {
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  return `${year}-${month}`;
 }
