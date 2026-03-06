@@ -33,7 +33,12 @@ export function AppShell({ role, userName, children }: AppShellProps) {
       <div className="relative mx-auto grid min-h-screen w-full max-w-[1560px] grid-cols-1 gap-4 px-4 py-4 lg:grid-cols-[300px_1fr] lg:gap-5 lg:px-6">
         <aside className="rounded-3xl border border-slate/20 bg-gradient-to-b from-[#16343b] via-[#13323a] to-[#112d34] p-4 text-white shadow-[0_24px_60px_-30px_rgba(16,33,38,0.72)]">
           <div className="rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur">
-            <p className="text-[11px] uppercase tracking-[0.24em] text-white/75">Loop</p>
+            <img
+              src="/brand/loop-logo.svg"
+              alt="LOOP"
+              className="h-8 w-auto invert brightness-0"
+            />
+            <p className="mt-2 text-[11px] uppercase tracking-[0.24em] text-white/75">Loop</p>
             <h1 className="mt-1 text-xl font-semibold">Client Portal</h1>
             <p className="mt-2 text-sm text-white/85">Panel informativo para clientes y gestion interna.</p>
             <div className="mt-4 grid grid-cols-2 gap-2 text-xs">

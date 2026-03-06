@@ -9,7 +9,8 @@ export default function LoginPage({ searchParams }: { searchParams?: { error?: s
 
       <div className="mx-auto grid w-full max-w-5xl grid-cols-1 gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <section className="rounded-3xl border border-slate/20 bg-white/95 p-8 shadow-card backdrop-blur-sm">
-          <p className="text-xs uppercase tracking-[0.2em] text-slate">Loop Portal</p>
+          <img src="/brand/loop-logo.svg" alt="LOOP" className="h-10 w-auto" />
+          <p className="mt-3 text-xs uppercase tracking-[0.2em] text-slate">Loop Portal</p>
           <h1 className="mt-2 text-4xl font-semibold leading-tight">Visualiza tu operacion en minutos</h1>
           <p className="mt-4 max-w-lg text-slate">
             Accede a llamadas, citas y reportes en una interfaz limpia, clara y pensada para decisiones rapidas.
