@@ -10,14 +10,14 @@ export function SimpleBarChart({ title, data, colorClass }: { title: string; dat
       <div className="flex items-center justify-between gap-2">
         <h3 className="text-sm font-semibold text-ink">{title}</h3>
         <div className="flex items-center gap-2">
-          <span className="rounded-lg border border-slate/20 bg-bg px-2 py-1 text-xs text-slate">Total: {total}</span>
-          <span className="rounded-lg border border-slate/20 bg-bg px-2 py-1 text-xs text-slate">
+          <span className="rounded-lg border border-white/35 bg-white/18 px-2 py-1 text-xs text-slate">Total: {total}</span>
+          <span className="rounded-lg border border-white/35 bg-white/18 px-2 py-1 text-xs text-slate">
             Promedio: {avg.toFixed(1)}
           </span>
         </div>
       </div>
       <div className="mt-4">
-        <div className="grid h-44 grid-cols-7 items-end gap-2 rounded-xl border border-slate/15 bg-bg/70 px-2.5 py-3">
+        <div className="grid h-44 grid-cols-7 items-end gap-2 rounded-xl border border-white/30 bg-white/14 px-2.5 py-3">
           {data.map((item) => {
             const height = Math.max(Math.round((item.value / max) * 100), 8);
             return (

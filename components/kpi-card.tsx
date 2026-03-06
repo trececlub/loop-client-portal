@@ -21,7 +21,7 @@ export function KpiCard({ item }: { item: KpiItem }) {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-mint/80 via-sky/80 to-mint/80" />
       <p className="text-[11px] uppercase tracking-[0.16em] text-slate">{item.label}</p>
       <p className="mt-2 text-3xl font-semibold leading-none text-ink">{item.value}</p>
-      <div className="mt-1 h-[3px] w-14 rounded-full bg-gradient-to-r from-mint/70 to-sky/70" />
+      <div className="mt-1 h-[3px] w-14 rounded-full bg-white/60" />
       <div className="mt-3 flex items-center justify-between gap-2">
         <p className={`text-sm font-medium ${toneClass}`}>{item.delta}</p>
         <span className={`rounded-full border px-2 py-0.5 text-xs font-medium ${toneChipClass}`}>
