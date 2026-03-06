@@ -9,7 +9,7 @@ export default async function PortalLayout({ children }: { children: React.React
   }
 
   return (
-    <AppShell role={session.role} clientName={session.clientName} userName={session.user.name}>
+    <AppShell role={session.role} userName={session.user.name}>
       {children}
     </AppShell>
   );

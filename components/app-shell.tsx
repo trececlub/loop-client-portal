@@ -16,12 +16,11 @@ const nav = [
 
 type AppShellProps = {
   role: "CTO" | "CEO" | "OPERARIO" | "CLIENTE";
-  clientName: string;
   userName: string;
   children: React.ReactNode;
 };
 
-export function AppShell({ role, clientName, userName, children }: AppShellProps) {
+export function AppShell({ role, userName, children }: AppShellProps) {
   const pathname = usePathname();
   const filteredNav = nav.filter((item) => !(item.internalOnly && role === "CLIENTE"));
 
@@ -57,9 +56,9 @@ export function AppShell({ role, clientName, userName, children }: AppShellProps
           <header className="border-b border-slate/15 px-5 py-4 sm:px-7">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-slate">Cliente activo</p>
-                <h2 className="text-lg font-semibold">{clientName}</h2>
-                <p className="text-xs text-slate">{userName} · {role}</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-slate">Usuario activo</p>
+                <h2 className="text-lg font-semibold">{userName}</h2>
+                <p className="text-xs text-slate">{role}</p>
               </div>
               <div className="flex items-center gap-2">
                 <div className="inline-flex items-center gap-3 rounded-xl border border-slate/20 bg-bg px-3 py-2 text-sm">
