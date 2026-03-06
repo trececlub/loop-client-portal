@@ -27,57 +27,66 @@ export function AppShell({ role, userName, children }: AppShellProps) {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-bg text-ink">
-      <div className="pointer-events-none absolute -left-20 -top-16 h-72 w-72 rounded-full bg-mint/20 blur-3xl" />
+      <div className="pointer-events-none absolute -left-20 -top-16 h-72 w-72 rounded-full bg-sky/25 blur-3xl" />
       <div className="pointer-events-none absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-sky/20 blur-3xl" />
 
       <div className="relative mx-auto grid min-h-screen w-full max-w-[1560px] grid-cols-1 gap-4 px-4 py-4 lg:grid-cols-[300px_1fr] lg:gap-5 lg:px-6">
-        <aside className="rounded-3xl border border-slate/20 bg-gradient-to-b from-[#16343b] via-[#13323a] to-[#112d34] p-4 text-white shadow-[0_24px_60px_-30px_rgba(16,33,38,0.72)]">
-          <div className="rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur">
+        <aside className="relative overflow-hidden rounded-3xl border border-sky-200/40 bg-gradient-to-b from-[#0b5f9f] via-[#0a6fb4] to-[#0b7ac3] p-4 text-white shadow-[0_24px_60px_-28px_rgba(4,68,121,0.7)]">
+          <div className="pointer-events-none absolute -right-10 -top-6 h-36 w-36 rounded-full bg-white/20 blur-2xl" />
+          <div className="pointer-events-none absolute -left-10 bottom-6 h-40 w-40 rounded-full bg-cyan-100/20 blur-3xl" />
+
+          <div className="relative rounded-2xl border border-white/30 bg-white/14 p-4 backdrop-blur">
             <img
               src="/brand/loop-logo.svg"
               alt="LOOP"
               className="h-8 w-auto invert brightness-0"
             />
-            <p className="mt-2 text-[11px] uppercase tracking-[0.24em] text-white/75">Loop</p>
-            <h1 className="mt-1 text-xl font-semibold">Client Portal</h1>
-            <p className="mt-2 text-sm text-white/85">Panel informativo para clientes y gestion interna.</p>
+            <h1 className="mt-3 text-xl font-semibold">Client Portal</h1>
+            <p className="mt-2 text-sm text-white/90">Panel informativo para clientes y gestion interna.</p>
             <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
-              <div className="rounded-xl border border-white/20 bg-white/10 px-2.5 py-2">
-                <p className="text-white/70">Rol activo</p>
+              <div className="rounded-xl border border-white/25 bg-white/14 px-2.5 py-2">
+                <p className="text-white/75">Rol activo</p>
                 <p className="mt-0.5 font-semibold text-white">{role}</p>
               </div>
-              <div className="rounded-xl border border-white/20 bg-white/10 px-2.5 py-2">
-                <p className="text-white/70">Sesion</p>
+              <div className="rounded-xl border border-white/25 bg-white/14 px-2.5 py-2">
+                <p className="text-white/75">Sesion</p>
                 <p className="mt-0.5 font-semibold text-white">Online</p>
               </div>
             </div>
           </div>
 
-          <nav className="mt-5 space-y-2">
+          <nav className="relative mt-5 space-y-2">
             {filteredNav.map((item) => {
               const active = pathname === item.href;
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`group block rounded-2xl border px-3 py-2.5 transition-all ${
+                  className={`group block rounded-2xl border px-3 py-2.5 transition-all duration-200 ${
                     active
-                      ? "border-white/30 bg-white/15 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]"
-                      : "border-transparent text-white/85 hover:-translate-y-[1px] hover:border-white/15 hover:bg-white/10"
+                      ? "border-sky-100/65 bg-white/28 text-white shadow-[0_14px_24px_-18px_rgba(0,58,106,0.9)]"
+                      : "border-white/0 text-white/90 hover:-translate-y-[1px] hover:border-white/30 hover:bg-white/16"
                   }`}
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2.5">
                     <span
-                      className={`inline-flex h-6 w-6 items-center justify-center rounded-lg border text-[10px] font-semibold ${
-                        active ? "border-white/30 bg-white/20 text-white" : "border-white/20 bg-white/10 text-white/80"
+                      className={`inline-flex h-6 w-6 items-center justify-center rounded-lg border text-[10px] font-semibold transition ${
+                        active
+                          ? "border-sky-100/60 bg-white/35 text-[#075a97]"
+                          : "border-white/30 bg-white/12 text-white/90 group-hover:bg-white/20"
                       }`}
                     >
                       {item.code}
                     </span>
-                    <div>
+                    <div className="min-w-0 flex-1">
                       <div className="text-sm font-medium">{item.label}</div>
-                      <div className="text-xs text-white/65">{item.hint}</div>
+                      <div className="text-xs text-white/75">{item.hint}</div>
                     </div>
+                    <span
+                      className={`h-1.5 w-1.5 rounded-full transition ${
+                        active ? "bg-white" : "bg-white/0 group-hover:bg-white/70"
+                      }`}
+                    />
                   </div>
                 </Link>
               );
