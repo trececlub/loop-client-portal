@@ -30,7 +30,7 @@ export function OrbBackground() {
           hoverIntensity={0}
           rotateOnHover={false}
           forceHoverState={false}
-          backgroundColor="#f4f7f6"
+          backgroundColor="#102126"
         />
       </div>
     </div>
