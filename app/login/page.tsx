@@ -3,7 +3,7 @@ import { loginAction } from "@/app/login/actions";
 export default function LoginPage({ searchParams }: { searchParams?: { error?: string } }) {
   const hasError = searchParams?.error === "invalid";
   return (
-    <div className="relative min-h-screen overflow-hidden bg-bg px-4 py-10">
+    <div className="relative min-h-screen overflow-hidden bg-transparent px-4 py-10">
       <div className="pointer-events-none absolute -left-16 top-20 h-64 w-64 rounded-full bg-mint/20 blur-3xl" />
       <div className="pointer-events-none absolute -right-12 bottom-12 h-72 w-72 rounded-full bg-sky/20 blur-3xl" />
 

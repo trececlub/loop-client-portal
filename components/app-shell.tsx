@@ -26,7 +26,7 @@ export function AppShell({ role, userName, children }: AppShellProps) {
   const activeItem = filteredNav.find((item) => pathname === item.href);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-bg text-ink">
+    <div className="relative min-h-screen overflow-hidden bg-transparent text-ink">
       <div className="pointer-events-none absolute -left-20 -top-16 h-72 w-72 rounded-full bg-sky/25 blur-3xl" />
       <div className="pointer-events-none absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-sky/20 blur-3xl" />
 
